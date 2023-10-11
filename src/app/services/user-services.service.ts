@@ -27,6 +27,6 @@ export class UserServicesService {
     return this.httpClient.get(`${this.apiURLAdminUsers}/list`);
   }
   saveUser(user:any):Observable<any>{
-     return this.httpClient.post<User>(`${this.apiURLAdminUsers}/save/`,user);
+     return this.httpClient.post<any>(`${this.apiURLAdminUsers}/save`,user);
   }
 }

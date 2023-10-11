@@ -29,7 +29,7 @@
 
     <mat-form-field appearance="outline">
         <mat-label>Celular</mat-label>
-        <input matInput type="text" placeholder="" formControlName="celular">
+        <input matInput  type="text" placeholder="" formControlName="celular">
         <mat-icon matSuffix>visibility_off</mat-icon>
         <mat-error>
             <ng-container *ngIf="controlHasError('celular','required')">
@@ -82,16 +82,12 @@
         </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="fill">
         <mat-label>Distrito</mat-label>
-        <input matInput type="text" placeholder="" formControlName="distrito.idDistrito">
-        <mat-icon matSuffix>visibility_off</mat-icon>
-        <mat-error>
-            <ng-container *ngIf="controlHasError('distrito','required')">
-                Este campo es obligatorio
-            </ng-container>
-        </mat-error>
-    </mat-form-field>
+        <mat-select matInput type="number" formControlName="distrito.idDistrito" (selectionChange)="onDistritoSeleccionado($event.value)">
+          <mat-option *ngFor="let distrito of distritos" [value]="distrito.idDistrito">{{distrito.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
 
     <button mat-raised-button style="background-color:#FF5A5F; color: white; margin-top: 10px;"

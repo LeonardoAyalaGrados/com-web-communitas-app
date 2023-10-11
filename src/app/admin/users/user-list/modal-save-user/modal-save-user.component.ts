@@ -1,8 +1,9 @@
 import { group } from '@angular/animations';
-import { Component,Inject } from '@angular/core';
+import { Component,Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DistrictService } from 'src/app/services/district.service';
 import { UserServicesService } from 'src/app/services/user-services.service';
 
 @Component({
@@ -10,10 +11,12 @@ import { UserServicesService } from 'src/app/services/user-services.service';
   templateUrl: './modal-save-user.component.html',
   styleUrls: ['./modal-save-user.component.css']
 })
-export class ModalSaveUserComponent {
+export class ModalSaveUserComponent implements OnInit {
 
   myForm:FormGroup;
-  constructor(public dialogo: MatDialogRef<ModalSaveUserComponent>,
+  distritos:any[]=[];
+
+  constructor(private districtService: DistrictService ,public dialogo: MatDialogRef<ModalSaveUserComponent>,
     @Inject(MAT_DIALOG_DATA) public mensaje: string,private fb:FormBuilder, private snackBar: MatSnackBar,private usuarioService: UserServicesService){
     this.myForm=this.fb.group({
       nombre:['',Validators.required],
@@ -23,9 +26,14 @@ export class ModalSaveUserComponent {
       contraseña:['',Validators.required],
       rol:['',Validators.required],
       direccion:['',Validators.required],
-      distrito:[{idDistrito:['',Validators.required]}],
+      // distrito:[{idDistrito:[Validators.required]}],
+      distrito: this.fb.group({
+        idDistrito:[Validators.required]}),
     }
     );
+  }
+  ngOnInit(): void {
+    this.listarDistritos();
   }
 
   customEmailValidator(control: AbstractControl): ValidationErrors | null {
@@ -55,7 +63,7 @@ export class ModalSaveUserComponent {
   
 
   confirmado(){
-    // GUARDAR NOTA
+    
     console.log(this.myForm.value);
       this.usuarioService.saveUser(this.myForm.value).subscribe(
         (data)=>{
@@ -65,6 +73,7 @@ export class ModalSaveUserComponent {
             duration:4000,
             verticalPosition:"top"
           });
+          this.cerrarDialogo();
         },(error)=>{
           console.log(error);
           console.log(this.myForm);
@@ -77,5 +86,30 @@ export class ModalSaveUserComponent {
   controlHasError(control: string, error: string): boolean {
     return this.myForm.controls[control].hasError(error) && this.myForm.controls[control].touched
   }    
+  
+  listarDistritos(){
+    this.districtService.listDistrict().subscribe(
+      (data)=>{
+          this.distritos=data;
+          console.log(data);
+      },
+      (error)=>{
+          console.log("error el listar paises")
+      }
+    );
+  }
+
+  onDistritoSeleccionado(valorSeleccionado: number){
+    console.log('Valor seleccionado:', valorSeleccionado);
+    if (this.myForm) {
+      const distritoControl = this.myForm.get('distrito.idDistrito');
+      if (distritoControl) {
+        distritoControl.setValue(valorSeleccionado);
+      }
+    }
+  }
+  cerrarDialogo(): void {
+    this.dialogo.close(false);
+  }
 }
 
