@@ -1,0 +1,55 @@
+<mat-card>
+    <mat-card-content>
+        <div>
+            <img src="./assets/imagenes/credentials.jpg" style="height: 250px; width: 250px; margin-left: 90px;">
+        </div>
+        <form [formGroup]="myForm" (ngSubmit)="iniciarSesion()">
+            <mat-form-field appearance="outline">
+                <mat-label>Correo</mat-label>
+                <input matInput type="email" placeholder="example@gmail.com" formControlName="email"
+                    (keyup)="createSlug()">
+                <mat-icon matSuffix>account_circle</mat-icon>
+                <mat-error>
+                    <ng-container *ngIf="controlHasError('email','required')">
+                        Este campo es obligatorio
+                    </ng-container>
+                    <ng-container *ngIf="myForm.get('email')">
+                        - No es un correo
+                    </ng-container>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" placeholder="*********" formControlName="password">
+                <mat-icon matSuffix>visibility_off</mat-icon>
+                <mat-error>
+                    <ng-container *ngIf="controlHasError('password','required')">
+                        Este campo es obligatorio
+                    </ng-container>
+                    <ng-container *ngIf="controlHasError('password','min')">
+                        La cantidad de caracteres debe ser mayor a 7
+                    </ng-container>
+                </mat-error>
+            </mat-form-field>
+
+            <div style="margin-left: 45px;">
+                <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="captcha">
+                </ngx-recaptcha2>
+            </div>
+
+            <button mat-raised-button style="background-color:#FF5A5F; color: white; margin-top: 10px;"
+                [disabled]="myForm.invalid">Ingresar</button>
+        </form>
+
+        <div class="row">
+            <div class="col">
+                <mat-label>¿Aún no te has registrado? </mat-label>
+                <a routerLink="/register" style="color: #3F51B5;">Regístrate aquí</a>
+                <!-- FALTA AGREGAR MODAL DE WTSP -->
+                <!--  -->
+                <!--  -->
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
