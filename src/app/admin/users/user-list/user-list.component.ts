@@ -5,6 +5,7 @@ import { UserServicesService } from 'src/app/services/user-services.service';
 import { User, UserPage } from 'src/model/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalSaveUserComponent } from './modal-save-user/modal-save-user.component';
+import { ModalEditComponent } from './modal-edit/modal-edit.component';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class UserListComponent implements OnInit{
       );
   }
 
-  mostrarDialogo(): void {
+  modalNewUser(): void {
     this.dialogo
       .open(ModalSaveUserComponent, {
         // data: `¿Te gusta programar en TypeScript?`
@@ -52,6 +53,25 @@ export class UserListComponent implements OnInit{
           //   });
         }
         
+      });
+  }
+
+  modalEditUser(idUsuario:any): void {
+    this.dialogo
+      .open(ModalEditComponent, {
+        data: { idUsuario}
+        
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+          this.listUsers();
+          // this.snackBar.open("Usuario agregado","exito",{
+          //   duration:4000,
+          //   verticalPosition:"top"
+          //   });
+        }
+       
       });
   }
   paginateUser(event: PageEvent) {

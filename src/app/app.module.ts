@@ -29,6 +29,7 @@ import {MatTableModule} from '@angular/material/table';
 import { ModalSaveUserComponent } from './admin/users/user-list/modal-save-user/modal-save-user.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
+import { ModalEditComponent } from './admin/users/user-list/modal-edit/modal-edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,8 @@ import {MatSelectModule} from '@angular/material/select';
     UserListComponent,
     BookListComponent,
     SidebarAdminComponent,
-    ModalSaveUserComponent
+    ModalSaveUserComponent,
+    ModalEditComponent
   ],
   imports: [
     BrowserModule,
