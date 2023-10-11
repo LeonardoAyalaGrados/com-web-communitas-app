@@ -1,3 +1,6 @@
+.body{
+    background: white;
+}
 .contenedor-padre {
     display: flex;
     flex-flow: column;
