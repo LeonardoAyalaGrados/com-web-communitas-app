@@ -10,6 +10,8 @@ import { User, UserPage } from 'src/model/user.model';
 export class UserServicesService {
 
   apiURLAdminUsers:string=enviroment.apiURLAdminUsers;  
+  apiURLHome:string=enviroment.apiURLHome;  
+
 
   constructor(private httpClient:HttpClient) { 
   }
@@ -28,5 +30,9 @@ export class UserServicesService {
   }
   saveUser(user:any):Observable<any>{
      return this.httpClient.post<any>(`${this.apiURLAdminUsers}/save`,user);
+  }
+
+  saveUserClient(user:any):Observable<any>{
+      return this.httpClient.post<any>(`${this.apiURLHome}/save`,user);
   }
 }
