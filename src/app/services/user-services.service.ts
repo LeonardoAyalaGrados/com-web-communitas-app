@@ -35,4 +35,9 @@ export class UserServicesService {
   saveUserClient(user:any):Observable<any>{
       return this.httpClient.post<any>(`${this.apiURLHome}/save`,user);
   }
+
+  findById(userId:any):Observable<any>{
+    return this.httpClient.get(`${this.apiURLAdminUsers}/id/${userId}`);
+  }
+
 }
