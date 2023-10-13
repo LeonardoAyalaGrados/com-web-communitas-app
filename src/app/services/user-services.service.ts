@@ -20,7 +20,7 @@ export class UserServicesService {
     let params = new HttpParams();
     params = params.append('size', size);
     params = params.append('page', page);
-    params = params.append('sort', 'fullName');
+    params = params.append('sort', 'idUsuario');
 
     return this.httpClient.get<UserPage>(`${this.apiURLAdminUsers}`, { params });
   }

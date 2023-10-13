@@ -1,1 +1,94 @@
-<p>modal-edit works!</p>
+<h1 mat-dialog-title>Editar Usuario</h1>
+<form [formGroup]="myForm" (ngSubmit)="editatUsuario()" style="margin-left: 10px;">
+
+    <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" placeholder="" formControlName="nombre">
+        <!-- <mat-icon matSuffix>visibility_off</mat-icon> -->
+        <mat-error>
+            <ng-container *ngIf="controlHasError('nombre','required')">
+                Este campo es obligatorio
+            </ng-container>
+            <!-- <ng-container *ngIf="controlHasError('password','min')">
+                La cantidad de caracteres debe ser mayor a 7
+            </ng-container> -->
+        </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+        <mat-label>Apellidos</mat-label>
+        <input matInput type="text" placeholder="" formControlName="apellido">
+        <!-- <mat-icon matSuffix>visibility_off</mat-icon> -->
+        <mat-error>
+            <ng-container *ngIf="controlHasError('apellido','required')">
+                Este campo es obligatorio
+            </ng-container>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Celular</mat-label>
+        <input matInput  type="text" placeholder="" formControlName="celular">
+        <!-- <mat-icon matSuffix>visibility_off</mat-icon> -->
+        <mat-error>
+            <ng-container *ngIf="controlHasError('celular','required')">
+                Este campo es obligatorio
+            </ng-container>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input matInput type="email" placeholder="example@gmail.com" formControlName="email" (keyup)="createSlug()">
+        <!-- <mat-icon matSuffix>account_circle</mat-icon> -->
+        <mat-error>
+            <ng-container *ngIf="controlHasError('email','required')">
+                Este campo es obligatorio
+            </ng-container>
+            <ng-container *ngIf="myForm.get('email')">
+                - No es un correo
+            </ng-container>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="text" placeholder="" formControlName="contraseña">
+        <!-- <mat-icon matSuffix>visibility_off</mat-icon> -->
+        <mat-error>
+            <ng-container *ngIf="controlHasError('contraseña','required')">
+                Este campo es obligatorio
+            </ng-container>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Rol</mat-label>
+        <mat-select matInput type="text" formControlName="rol">
+          <mat-option value="ADMINISTRADOR">ADMINISTRADOR</mat-option>
+          <mat-option value="USUARIO">USUARIO</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Direccion</mat-label>
+        <input matInput type="text" placeholder="" formControlName="direccion">
+        <!-- <mat-icon matSuffix>visibility_off</mat-icon> -->
+        <mat-error>
+            <ng-container *ngIf="controlHasError('direccion','required')">
+                Este campo es obligatorio
+            </ng-container>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Distrito</mat-label>
+        <mat-select matInput type="number" formControlName="distrito.idDistrito" (selectionChange)="onDistritoSeleccionado($event.value)">
+          <mat-option *ngFor="let distrito of distritos" [value]="distrito.idDistrito">{{distrito.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <button mat-raised-button style="background-color:#FF5A5F; color: white; margin-top: 10px;"
+        [disabled]="myForm.invalid">Editar Usuario</button>
+</form>

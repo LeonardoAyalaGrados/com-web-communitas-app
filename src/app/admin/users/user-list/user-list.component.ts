@@ -17,7 +17,7 @@ export class UserListComponent implements OnInit{
 
   dataUser:User[]=[];  
   userPage?:UserPage;
-  displayedColumns: string[] = ['idUsuario', 'fullName', 'celular', 'email','rol','creadoEn','actualizadoEn','actions'];
+  displayedColumns: string[] = ['idUsuario', 'fullName', 'celular', 'email','rol','distrito','creadoEn','actualizadoEn','actions'];
 
   constructor(private userService: UserServicesService, public dialogo: MatDialog){
   }
