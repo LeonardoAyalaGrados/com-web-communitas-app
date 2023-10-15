@@ -21,13 +21,14 @@ export class LoginComponent {
       {
         correo:['',[Validators.required, this.customEmailValidator]],
         contraseña:['',[Validators.required, Validators.min(8)]],
-        // captcha:['',[Validators.required]]
+        captcha:['',[Validators.required]]
       }
     );
   }
 
   iniciarSesion():any{
-    this.usuarioServices.login(this.myForm.value).subscribe(
+    const credentials=this.myForm.value;
+    this.usuarioServices.login(credentials.correo,credentials.contraseña).subscribe(
       (data)=>{
         console.log("login data "+this.myForm.value);
         this.snackbar.open("credenciales correctas","BIENVENIDO",{

@@ -46,8 +46,12 @@ export class UserServicesService {
   }
 
   //USUARIO Y CREDENCIALES GUARDADOS EN EL LOCALSTORAGE
-  login(credentials:any):Observable<any>{
-    return this.httpClient.post<any>("http://localhost:8080/login",credentials,{
+  login(correo:string,contraseña:string):Observable<any>{
+    const loginData = {
+      correo: correo,
+      contraseña: contraseña
+    };
+    return this.httpClient.post<any>("http://localhost:8080/login",loginData,{
     observe:'response'  
 
   }).pipe(map((response:HttpResponse<any>)=>{

@@ -12,7 +12,7 @@ export class BookListComponent implements OnInit {
 
   dataBook:Book[]=[];  
   bookPage?:BookPage;
-  displayedColumns: string[] = ['idLibro', 'imagen', 'titulo', 'precio','stock','autor','tapa','creadoEn','anio','actions'];
+  displayedColumns: string[] = ['idLibro', 'imagen', 'titulo', 'precio','stock','autor','tapa','creadoEn','anio','nombreCategoria','actions'];
 
   ngOnInit(): void {
     this.listBooks();
