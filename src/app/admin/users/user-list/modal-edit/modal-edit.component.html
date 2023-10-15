@@ -84,7 +84,7 @@
 
     <mat-form-field appearance="fill">
         <mat-label>Distrito</mat-label>
-        <mat-select matInput type="number" formControlName="distrito.idDistrito" (selectionChange)="onDistritoSeleccionado($event.value)">
+        <mat-select matInput type="number" [(value)]="idDistritoMatSelect" formControlName="distrito.idDistrito" (selectionChange)="onDistritoSeleccionado($event.value)">
           <mat-option *ngFor="let distrito of distritos" [value]="distrito.idDistrito">{{distrito.nombre}}</mat-option>
         </mat-select>
       </mat-form-field>

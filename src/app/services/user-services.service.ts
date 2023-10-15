@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { enviroment } from 'src/enviroment/enviroment';
 import { User, UserPage } from 'src/model/user.model';
 
@@ -38,6 +38,56 @@ export class UserServicesService {
 
   findById(userId:any):Observable<any>{
     return this.httpClient.get(`${this.apiURLAdminUsers}/id/${userId}`);
+  }
+
+  findUserForEmail(email:any):Observable<any>{
+    return this.httpClient.get<any>(`${this.apiURLAdminUsers}/findbyemail?email=${email}`);
+    
+  }
+
+  //USUARIO Y CREDENCIALES GUARDADOS EN EL LOCALSTORAGE
+  login(credentials:any):Observable<any>{
+    return this.httpClient.post<any>("http://localhost:8080/login",credentials,{
+    observe:'response'  
+
+  }).pipe(map((response:HttpResponse<any>)=>{
+    const boby=response.body;
+    const headers=response.headers;
+
+    const bearerToken=headers.get('Authorization')!;
+    const token=bearerToken.replace('Bearer ', '');
+
+    localStorage.setItem('token', token);
+    return boby;
+  }));
+}
+
+  getToken(){
+    return localStorage.getItem('token');
+  }
+
+  public isLoggedIn(){
+    let tokenLogged=localStorage.getItem('token');
+    if(tokenLogged==''|| tokenLogged==undefined|| tokenLogged==null){
+        return false;
+    }else{
+      return true;
+    }
+  }
+
+  public cerrarSesion(){
+    localStorage.removeItem ('token');
+    localStorage.removeItem('user');
+    return true;
+  }
+  
+  public setUser(user:any){
+    localStorage.setItem('user',JSON.stringify(user));
+  }
+
+  public getUser(){
+   let userLocal=localStorage.getItem('user')!;
+   return JSON.parse(userLocal);
   }
 
 }

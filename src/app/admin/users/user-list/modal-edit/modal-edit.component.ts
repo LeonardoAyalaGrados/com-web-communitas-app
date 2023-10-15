@@ -16,6 +16,7 @@ export class ModalEditComponent implements OnInit{
   cadena:string;
   myForm:FormGroup;
   distritos:any[]=[];
+  public idDistritoMatSelect:number;
 
   constructor(@Inject(MAT_DIALOG_DATA) public dataIdUsuario: { userId: any }, private usuarioServices:UserServicesService ,
                          private districtServices:DistrictService, private fb:FormBuilder, private snackBar:MatSnackBar){
@@ -37,6 +38,7 @@ export class ModalEditComponent implements OnInit{
   ngOnInit(): void {
     console.log(this.dataIdUsuario);
     this.listarDistritos();
+    
     this.buscarUsuarioPorId();
 
   }
@@ -64,12 +66,16 @@ export class ModalEditComponent implements OnInit{
           this.usuarioEncontrado=data;
           console.log(data);
           this.myForm.patchValue(data);
-          const distritoControl = this.myForm.get('distrito.idDistrito');
-          if (distritoControl) { // Verifica que distritoControl no sea null
-            const distritoId = data.distrito;
-            distritoControl.setValue(distritoId);
-            console.log(data.distrito);
-          }
+
+          this.idDistritoMatSelect=data.distrito;
+          console.log(this.idDistritoMatSelect);
+          // const distritoControl = this.myForm.get('distrito.idDistrito');
+          // if (distritoControl) { // Verifica que distritoControl no sea null
+          //   const distritoId = data.nombreDistrito;
+          //   distritoControl.setValue(distritoId);
+          //   console.log(data.distrito);
+          //   console.log("cons distritoId :"+ distritoId);
+          // }
           
           
       },

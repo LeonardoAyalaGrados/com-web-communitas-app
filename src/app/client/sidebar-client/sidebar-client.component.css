@@ -1,0 +1,30 @@
+.body{
+    background: white;
+}
+.contenedor-padre {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.barra {
+    flex: 0 1 auto;
+}
+.contenido {
+    flex: 1 1 auto;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+.padding-10 {
+    padding: 10px;
+}
+mat-toolbar-row{
+    height: 40px;
+} 
+ .imagen{
+    margin-left: 80px;
+    margin-top: 10px; 
+    width:30px; 
+}

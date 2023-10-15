@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
+import { UserServicesService } from '../services/user-services.service';
 
 @Component({
   selector: 'app-login',
@@ -12,28 +13,59 @@ export class LoginComponent {
   
   myForm: FormGroup;
   siteKey: string;
+  userData:any;
 
-  constructor(private fb: FormBuilder, private router:Router, private snackbar: MatSnackBar){
+  constructor(private fb: FormBuilder, private router:Router, private snackbar: MatSnackBar, private usuarioServices:UserServicesService){
     this.siteKey='6Ld1QlQoAAAAAH0EsnvbwOTAwtOdqxQ_4AK6nYHr';
     this.myForm=this.fb.group(
       {
-        email:['',[Validators.required, this.customEmailValidator]],
-        password:['',[Validators.required, Validators.min(8)]],
-        captcha:['',[Validators.required]]
+        correo:['',[Validators.required, this.customEmailValidator]],
+        contraseña:['',[Validators.required, Validators.min(8)]],
+        // captcha:['',[Validators.required]]
+      }
+    );
+  }
+
+  iniciarSesion():any{
+    this.usuarioServices.login(this.myForm.value).subscribe(
+      (data)=>{
+        console.log("login data "+this.myForm.value);
+        this.snackbar.open("credenciales correctas","BIENVENIDO",{
+          duration:4000,
+          verticalPosition:"top"
+        });
+        this.usuarioServices.findUserForEmail(this.myForm.value.correo).subscribe(
+          (data:any)=>{
+            this.userData=data;
+            console.log(data);
+            this.usuarioServices.setUser(this.userData);
+            console.log(this.usuarioServices.getUser().rol);
+            if(this.usuarioServices.getUser().rol==='ADMINISTRADOR'){
+                this.router.navigate(['admin/user-list']);
+            }if(this.usuarioServices.getUser().rol==='USUARIO'){
+              this.router.navigate(['client/profile']);
+            }
+
+
+          },(error:any)=>{
+            console.log(error);
+          }
+          );
+
+      },(error)=>{
+          console.log(error);
+          this.snackbar.open("credenciales incorrectas","ok",{
+            duration:4000,            
+            verticalPosition:"top"
+          });
+          this.router.navigate([""]);
       }
     );
   }
 
 
-  iniciarSesion(){
-    this.snackbar.open("credenciales correctas","Listo",{
-      duration:4000,            
-      verticalPosition:"top"
-    });
-      this.router.navigate(["/admin/user-list"]);
-  };
   createSlug() {
-    const emailValue = this.myForm!.controls['email'].value;
+    const emailValue = this.myForm!.controls['correo'].value;
     const safeCharacters = emailValue
       .toLowerCase()
       .replace(/\s+/g, '-') // Replace spaces with -
@@ -42,7 +74,7 @@ export class LoginComponent {
       .replace(/-+$/, '') // Trim - from the end of text
       .replace(/[^a-zA-Z0-9@.-]/g, ''); // Remove characters other than letters, numbers, @, . (dot), and hyphens
   
-    this.myForm!.controls['email'].setValue(safeCharacters);
+    this.myForm!.controls['correo'].setValue(safeCharacters);
   }
   customEmailValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;

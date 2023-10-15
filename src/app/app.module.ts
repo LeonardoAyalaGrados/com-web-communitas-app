@@ -15,7 +15,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HomeComponent } from './home/home.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserListComponent } from './admin/users/user-list/user-list.component';
 import { BookListComponent } from './admin/books/book-list/book-list.component';
 import { SidebarAdminComponent } from './admin/sidebar-admin/sidebar-admin.component';
@@ -31,6 +31,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import { ModalEditComponent } from './admin/users/user-list/modal-edit/modal-edit.component';
 import { RegisterComponent } from './register/register.component';
+import { ImagePipePipe } from './shared/image-pipe.pipe';
+import { SidebarClientComponent } from './client/sidebar-client/sidebar-client.component';
+import { ClientProfileComponent } from './client/client-profile/client-profile.component';
+import { NombreDelInterceptorInterceptor } from 'src/helpers/auth.interceptor';
+import { SolesPipePipe } from './shared/soles-pipe.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +47,11 @@ import { RegisterComponent } from './register/register.component';
     SidebarAdminComponent,
     ModalSaveUserComponent,
     ModalEditComponent,
-    RegisterComponent
+    RegisterComponent,
+    ImagePipePipe,
+    SidebarClientComponent,
+    ClientProfileComponent,
+    SolesPipePipe
   ],
   imports: [
     BrowserModule,
@@ -69,7 +78,7 @@ import { RegisterComponent } from './register/register.component';
     MatSelectModule
 
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass:NombreDelInterceptorInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

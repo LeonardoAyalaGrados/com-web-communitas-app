@@ -6,14 +6,14 @@
         <form [formGroup]="myForm" (ngSubmit)="iniciarSesion()">
             <mat-form-field appearance="outline">
                 <mat-label>Correo</mat-label>
-                <input matInput type="email" placeholder="example@gmail.com" formControlName="email"
+                <input matInput type="email" placeholder="example@gmail.com" formControlName="correo"
                     (keyup)="createSlug()">
                 <mat-icon matSuffix>account_circle</mat-icon>
                 <mat-error>
-                    <ng-container *ngIf="controlHasError('email','required')">
+                    <ng-container *ngIf="controlHasError('correo','required')">
                         Este campo es obligatorio
                     </ng-container>
-                    <ng-container *ngIf="myForm.get('email')">
+                    <ng-container *ngIf="myForm.get('correo')">
                         - No es un correo
                     </ng-container>
                 </mat-error>
@@ -21,22 +21,22 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Contraseña</mat-label>
-                <input matInput type="password" placeholder="*********" formControlName="password">
+                <input matInput type="password" maxlength="12" placeholder="*********" formControlName="contraseña">
                 <mat-icon matSuffix>visibility_off</mat-icon>
                 <mat-error>
-                    <ng-container *ngIf="controlHasError('password','required')">
+                    <ng-container *ngIf="controlHasError('contraseña','required')">
                         Este campo es obligatorio
                     </ng-container>
-                    <ng-container *ngIf="controlHasError('password','min')">
+                    <ng-container *ngIf="controlHasError('contraseña','min')">
                         La cantidad de caracteres debe ser mayor a 7
                     </ng-container>
                 </mat-error>
             </mat-form-field>
 
-            <div style="margin-left: 45px;">
+            <!-- <div style="margin-left: 45px;">
                 <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="captcha">
                 </ngx-recaptcha2>
-            </div>
+            </div> -->
 
             <button mat-raised-button style="background-color:#FF5A5F; color: white; margin-top: 10px;"
                 [disabled]="myForm.invalid">Ingresar</button>
