@@ -20,4 +20,8 @@ export class BookServicesService {
 
     return this.httpClient.get<BookPage>(`${this.apiBook}`, { params });
   }
+
+  upploadFile(formData: FormData):Observable<any>{
+    return this.httpClient.post(`http://localhost:8080/api/media/upload`,formData);
+}
 }

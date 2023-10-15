@@ -36,6 +36,7 @@ import { SidebarClientComponent } from './client/sidebar-client/sidebar-client.c
 import { ClientProfileComponent } from './client/client-profile/client-profile.component';
 import { NombreDelInterceptorInterceptor } from 'src/helpers/auth.interceptor';
 import { SolesPipePipe } from './shared/soles-pipe.pipe';
+import { ModalSaveBookComponent } from './admin/books/book-list/modal-save-book/modal-save-book.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +52,8 @@ import { SolesPipePipe } from './shared/soles-pipe.pipe';
     ImagePipePipe,
     SidebarClientComponent,
     ClientProfileComponent,
-    SolesPipePipe
+    SolesPipePipe,
+    ModalSaveBookComponent
   ],
   imports: [
     BrowserModule,

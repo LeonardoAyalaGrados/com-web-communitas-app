@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { BookServicesService } from 'src/app/services/book-services.service';
 import { Book, BookPage } from 'src/model/bookl.model';
+import { ModalSaveBookComponent } from './modal-save-book/modal-save-book.component';
 
 @Component({
   selector: 'app-book-list',
@@ -18,7 +20,7 @@ export class BookListComponent implements OnInit {
     this.listBooks();
   }
 
-  constructor(private bookServices:BookServicesService){
+  constructor(private bookServices:BookServicesService,public dialogo: MatDialog){
 
   }
 
@@ -34,7 +36,24 @@ export class BookListComponent implements OnInit {
   }
 
   modalEditUser(idUsuario:any){}
-  modalNewBook(){}
+
+  modalNewBook(){
+    this.dialogo
+    .open(ModalSaveBookComponent, {
+      // data: `¿Te gusta programar en TypeScript?`
+    })
+    .afterClosed()
+    .subscribe((confirmado: Boolean) => {
+      if (confirmado) {
+        this.listBooks();
+        // this.snackBar.open("Usuario agregado","exito",{
+        //   duration:4000,
+        //   verticalPosition:"top"
+        //   });
+      }
+      
+    });
+  }
 
   paginateUser(event: PageEvent) {
     const page = event.pageIndex;

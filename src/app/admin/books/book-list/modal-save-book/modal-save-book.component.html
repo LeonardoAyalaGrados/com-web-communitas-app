@@ -1,0 +1,140 @@
+<div class="container">
+    
+    <div class="row">
+      <div class="col-md-8">
+        <form class="mt-5" [formGroup]="myForm" (ngSubmit)="newBookSave()">
+            <h1>Nuevo libro</h1>
+          <!-- Título -->
+          <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Título</mat-label>
+            <input matInput type="text" placeholder="Título" formControlName="titulo"/>
+            <mat-error>
+              <ng-container *ngIf="controlHasError('titulo', 'required')">
+                Este campo es obligatorio
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Descripción -->
+          <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <input matInput type="text" placeholder="Descripción" formControlName="descripcion" />
+            <mat-error>
+              <ng-container *ngIf="controlHasError('descripcion', 'required')">
+                Este campo es obligatorio
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Precio -->
+          <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Precio</mat-label>
+            <input matInput type="number" placeholder="Precio" formControlName="precio" />
+            <mat-error>
+              <ng-container *ngIf="controlHasError('precio', 'required')">
+                Este campo es obligatorio
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Imagen -->
+          <div class="mb-3">
+            <label class="d-block mb-1">Portada</label>
+            <button type="button" mat-raised-button (click)="coverInputFile.click()">
+              Seleccionar archivo
+            </button>
+            <div *ngIf="myForm.controls['imagen'].valid">
+              El archivo ha sido subido: {{ myForm.controls['imagen'].value }}
+            </div>
+            <mat-error *ngIf="controlHasError('imagen', 'required')">
+              Este campo es obligatorio
+            </mat-error>
+            <input type="file" class="d-none" #coverInputFile accept="image/*" (change)="uploadFile($event, 'imagen')">
+          </div>
+  
+          <!-- Stock -->
+          <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Stock</mat-label>
+            <input matInput type="number" placeholder="Stock" formControlName="stock" />
+            <mat-error>
+              <ng-container *ngIf="controlHasError('stock', 'required')">
+                Este campo es obligatorio
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Autor -->
+          <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Autor</mat-label>
+            <input matInput type="text" placeholder="Autor" formControlName="autor" />
+            <mat-error>
+              <ng-container *ngIf="controlHasError('autor', 'required')">
+                Este campo es obligatorio
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Páginas -->
+          <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Páginas</mat-label>
+            <input matInput type="number" placeholder="Páginas" formControlName="paginas" />
+            <mat-error>
+              <ng-container *ngIf="controlHasError('paginas', 'required')">
+                Este campo es obligatorio
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Año -->
+          <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Año</mat-label>
+            <input matInput type="number" placeholder="Año" formControlName="anio" />
+            <mat-error>
+              <ng-container *ngIf="controlHasError('anio', 'required')">
+                Este campo es obligatorio
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Tapa -->
+          <mat-form-field appearance="fill">
+            <mat-label>Tapa</mat-label>
+            <mat-select matInput formControlName="tapa">
+              <mat-option value="RÚSTICA">RÚSTICA</mat-option>
+              <mat-option value="TAPA_DURA">TAPA DURA</mat-option>
+              <mat-option value="BLANDA">BLANDA</mat-option>
+              <mat-option value="GRAPAS">GRAPAS</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <!-- Categoría -->
+          <!-- <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Categoría</mat-label>
+            <mat-select formControlName="categoria.idCategoria">
+              <mat-option *ngFor="let category of categories" [value]="category.idCategoria">
+                {{ category.nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <ng-container *ngIf="controlHasError('categoria.idCategoria', 'required')">
+                Debes seleccionar una categoría
+              </ng-container>
+            </mat-error>
+          </mat-form-field> -->
+  
+          <div class="text-end">
+            <button mat-raised-button color="primary" class="ms-2" [disabled]="myForm.invalid">Crear libro</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-4 text-center">
+        <div *ngIf="myForm.controls['imagen'].value; else noCoverPathMessage">
+          <img [src]="myForm.controls['imagen'].value | imagePipe" alt="Portada" class="img-thumbnail">
+        </div>
+        <ng-template #noCoverPathMessage>
+          Sin portada
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  
