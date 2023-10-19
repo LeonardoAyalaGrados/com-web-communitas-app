@@ -24,4 +24,8 @@ export class BookServicesService {
   upploadFile(formData: FormData):Observable<any>{
     return this.httpClient.post(`http://localhost:8080/api/media/upload`,formData);
 }
+
+  saveBook(book:any):Observable<any>{
+    return this.httpClient.post(`${this.apiBook}/save`,book);
+  }
 }

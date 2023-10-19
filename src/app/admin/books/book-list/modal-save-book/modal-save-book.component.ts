@@ -32,7 +32,23 @@ export class ModalSaveBookComponent {
     }
 
     newBookSave(){
-      
+      console.log(this.myForm.value);
+      this.bookServices.saveBook(this.myForm.value).subscribe(
+        (data)=>{
+          this.snackBar.open("Libro agregado","EXITO",{
+            duration:4000,
+            verticalPosition:"top"
+          });
+          this.cerrarDialogo();
+        },
+        (error)=>{
+          console.log(error);
+          this.snackBar.open("No se pudo agregar","ERROR",{
+            duration:4000,
+            verticalPosition:"top"
+          });
+        }
+      );
     }
 
     controlHasError(control: string, error: string): boolean {
@@ -53,5 +69,18 @@ export class ModalSaveBookComponent {
           }
         );
       }
+    }
+    onCategoriaSeleccionado(valorSeleccionado: number){
+      console.log('Valor categoria seleccionado:', valorSeleccionado);
+      if (this.myForm) {
+        const distritoControl = this.myForm.get('categoria.idCategoria');
+        if (distritoControl) {
+          distritoControl.setValue(valorSeleccionado);
+        }
+      }
+    }
+
+    cerrarDialogo(): void {
+      this.dialogo.close(false);
     }
 }

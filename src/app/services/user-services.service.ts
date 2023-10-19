@@ -94,4 +94,8 @@ export class UserServicesService {
    return JSON.parse(userLocal);
   }
 
+  public getRol(){
+    let objetoUser= this.getUser();
+    return objetoUser.rol;
+  }
 }

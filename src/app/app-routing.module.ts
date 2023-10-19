@@ -8,18 +8,19 @@ import { SidebarAdminComponent } from './admin/sidebar-admin/sidebar-admin.compo
 import { RegisterComponent } from './register/register.component';
 import { SidebarClientComponent } from './client/sidebar-client/sidebar-client.component';
 import { ClientProfileComponent } from './client/client-profile/client-profile.component';
-import { AuthGuard } from 'src/helpers/auth.guard';
+import { AuthAdminGuard } from 'src/helpers/authAdmin.guard';
+import { AuthClientGuard } from 'src/helpers/authClient.guard';
 
 const routes: Routes = [
   {path:"",component:HomeComponent, pathMatch:"full"},
   {path:"login",component:LoginComponent},
   {path:"admin", component:SidebarAdminComponent, children:[
-                             {path:"user-list", component:UserListComponent,canActivate:[AuthGuard]},
-                             {path:"book-list", component:BookListComponent,canActivate:[AuthGuard]}
+                             {path:"user-list", component:UserListComponent,canActivate:[AuthAdminGuard]},
+                             {path:"book-list", component:BookListComponent,canActivate:[AuthAdminGuard]}
   ]},
   {path:"register",component:RegisterComponent},
   {path:"client", component:SidebarClientComponent,children:[
-                                {path:"profile", component:ClientProfileComponent,canActivate:[AuthGuard]}
+                                {path:"profile", component:ClientProfileComponent,canActivate:[AuthClientGuard]}
   ]},
 ];
 

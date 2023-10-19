@@ -106,6 +106,21 @@
               <mat-option value="GRAPAS">GRAPAS</mat-option>
             </mat-select>
           </mat-form-field>
+
+           <!-- Categoria -->
+           <mat-form-field appearance="fill">
+            <mat-label>Categoria</mat-label>
+            <mat-select matInput formControlName="categoria.idCategoria" (selectionChange)="onCategoriaSeleccionado($event.value)">
+              <mat-option value="1">HUMANIDADES</mat-option>
+              <mat-option value="2">DERECHO</mat-option>
+              <mat-option value="3">ARTE</mat-option>
+              <mat-option value="4">COCINA</mat-option>
+              <mat-option value="5">LITERATURA</mat-option>
+              <mat-option value="6">CÓMICS</mat-option>
+              <mat-option value="7">CIENCIAS</mat-option>
+              <mat-option value="8">VIDA SALUDABLE</mat-option>
+            </mat-select>
+          </mat-form-field>
   
           <!-- Categoría -->
           <!-- <mat-form-field class="mb-2 w-100" appearance="outline">

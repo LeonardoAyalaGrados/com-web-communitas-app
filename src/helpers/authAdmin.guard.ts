@@ -7,7 +7,7 @@ import { UserServicesService } from 'src/app/services/user-services.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthAdminGuard implements CanActivate {
 
   constructor(private usuarioService: UserServicesService, private router: Router){
 
@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(this.usuarioService.getToken()){
+    if(this.usuarioService.getRol()=="ADMINISTRADOR"){
         return true;
     }
     this.router.navigate(['']);
