@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserServicesService } from 'src/app/services/user-services.service';
 
 @Component({
   selector: 'app-client-profile',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./client-profile.component.css']
 })
 export class ClientProfileComponent {
+  nombreUsuario:any;
+  constructor(private userServices:UserServicesService){
+    this.nombreUsuario=this.userServices.getUser().fullName;
+  }
 
 }
