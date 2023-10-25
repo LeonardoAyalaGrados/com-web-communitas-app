@@ -1,8 +1,17 @@
 <mat-toolbar style="background-color:#002A69;">
-   <span><a style="color: white; text-decoration: none;" routerLink="">Communitas</a></span>
-   <span class="example-spacer"></span>
+  <span><a style="color: white; text-decoration: none;" routerLink="">Communitas</a></span>
+  <span class="example-spacer"></span>
 
-   <a routerLink="/login" style="color: white;" ><i class="fa-solid fa-arrow-right-to-bracket"></i></a>
-   
- 
- </mat-toolbar>
+  <ng-container *ngIf="userServices.isLoggedIn(); else loginLink">
+    <button mat-button [matMenuTriggerFor]="menu"><i class="fa-solid fa-user" style="color: white;"></i></button>
+    <mat-menu #menu="matMenu">
+      <button (click)="logout()">
+        Cerrar Sesión <i class="fa-solid fa-right-to-bracket"></i></button>
+    </mat-menu>
+  </ng-container>
+
+  <ng-template #loginLink>
+    <a routerLink="/login" style="color: white;"><i class="fa-solid fa-right-from-bracket"></i></a>
+  </ng-template>
+
+</mat-toolbar>

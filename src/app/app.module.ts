@@ -37,6 +37,8 @@ import { ClientProfileComponent } from './client/client-profile/client-profile.c
 import { NombreDelInterceptorInterceptor } from 'src/helpers/auth.interceptor';
 import { SolesPipePipe } from './shared/soles-pipe.pipe';
 import { ModalSaveBookComponent } from './admin/books/book-list/modal-save-book/modal-save-book.component';
+import { MatMenuModule } from '@angular/material/menu';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +79,8 @@ import { ModalSaveBookComponent } from './admin/books/book-list/modal-save-book/
     MatPaginatorModule,
     MatTableModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule
 
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass:NombreDelInterceptorInterceptor, multi:true}],

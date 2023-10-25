@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserServicesService } from '../services/user-services.service';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DistrictService } from '../services/district.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
       apellido:['',Validators.required],
       celular:['',Validators.required],
       email:['',[Validators.required,this.customEmailValidator]],
-      contraseña:['',Validators.required],
+      contraseña:['',[Validators.required, this.validacionLongitudContraseña(8)]],
       direccion:['',Validators.required],
       distrito: this.fb.group({
         idDistrito:[Validators.required]}),
@@ -86,16 +86,54 @@ export class RegisterComponent implements OnInit {
   }
 
   createSlug() {
-    const emailValue = this.myForm!.controls['email'].value;
+    const emailValue = this.myForm!.controls['correo'].value;
     const safeCharacters = emailValue
       .toLowerCase()
       .replace(/\s+/g, '-') // Replace spaces with -
-      .replace(/(\.|-)+/g, '$1') // Replace multiple dots or hyphens with a single occurrence
+      .replace(/(\.|-|_)+/g, '$1') // Replace multiple dots, hyphens, or underscores with a single occurrence
       .replace(/^-+/, '') // Trim - from the start of text
       .replace(/-+$/, '') // Trim - from the end of text
-      .replace(/[^a-zA-Z0-9@.-]/g, ''); // Remove characters other than letters, numbers, @, . (dot), and hyphens
+      .replace(/[^a-zA-Z0-9@._-]/g, ''); // Remove characters other than letters, numbers, @, . (dot), hyphens, and underscores
+    this.myForm!.controls['correo'].setValue(safeCharacters);
+  }
+
+
+  createSlugNombre() {
+    const nombre = this.myForm!.controls['nombre'].value;
+    const nombreLimpio = nombre.replace(/[^a-zA-Z\s]/g, '');
+    this.myForm!.controls['nombre'].setValue(nombreLimpio);
+  }
+
+
+  createSlugApellido() {
+    const apellido = this.myForm!.controls['apellido'].value;
+    const apellidoLimpio = apellido.replace(/[^a-zA-Z\s]/g, '');
+    this.myForm!.controls['apellido'].setValue(apellidoLimpio);
+  }
+
+
+  createSlugCelular() {
+    const celular = this.myForm!.controls['celular'].value;
+    
+    // Reemplaza todo lo que no sea un dígito con una cadena vacía
+    let celularLimpio = celular.replace(/[^\d]/g, '');
   
-    this.myForm!.controls['email'].setValue(safeCharacters);
+    // Agrega un "9" al principio si no comienza con "9"
+    if (!celularLimpio.startsWith('9')) {
+      celularLimpio = '9' + celularLimpio;
+    }
+  
+    this.myForm!.controls['celular'].setValue(celularLimpio);
+  }
+
+
+  validacionLongitudContraseña(minLength: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value && control.value.length < minLength) {
+        return { passwordLength: true };
+      }
+      return null;
+    };
   }
 
   controlHasError(control: string, error: string): boolean {

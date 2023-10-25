@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { UserServicesService } from '../services/user-services.service';
@@ -20,7 +20,7 @@ export class LoginComponent {
     this.myForm=this.fb.group(
       {
         correo:['',[Validators.required, this.customEmailValidator]],
-        contraseña:['',[Validators.required, Validators.min(8)]],
+        contraseña:['',[Validators.required, Validators.min(7)]],
         captcha:['',[Validators.required]]
       }
     );
@@ -41,6 +41,7 @@ export class LoginComponent {
             console.log(data);
             this.usuarioServices.setUser(this.userData);
             console.log(this.usuarioServices.getUser().rol);
+
             if(this.usuarioServices.getUser().rol==='ADMINISTRADOR'){
                 this.router.navigate(['admin/user-list']);
             }if(this.usuarioServices.getUser().rol==='USUARIO'){
@@ -70,13 +71,13 @@ export class LoginComponent {
     const safeCharacters = emailValue
       .toLowerCase()
       .replace(/\s+/g, '-') // Replace spaces with -
-      .replace(/(\.|-)+/g, '$1') // Replace multiple dots or hyphens with a single occurrence
+      .replace(/(\.|-|_)+/g, '$1') // Replace multiple dots, hyphens, or underscores with a single occurrence
       .replace(/^-+/, '') // Trim - from the start of text
       .replace(/-+$/, '') // Trim - from the end of text
-      .replace(/[^a-zA-Z0-9@.-]/g, ''); // Remove characters other than letters, numbers, @, . (dot), and hyphens
-  
+      .replace(/[^a-zA-Z0-9@._-]/g, ''); // Remove characters other than letters, numbers, @, . (dot), hyphens, and underscores
     this.myForm!.controls['correo'].setValue(safeCharacters);
   }
+  
   customEmailValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -87,6 +88,8 @@ export class LoginComponent {
 
     return null;
   }
+
+    
   controlHasError(control: string, error: string): boolean {
     return this.myForm.controls[control].hasError(error) && this.myForm.controls[control].touched
   }
