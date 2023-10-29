@@ -38,6 +38,7 @@ import { NombreDelInterceptorInterceptor } from 'src/helpers/auth.interceptor';
 import { SolesPipePipe } from './shared/soles-pipe.pipe';
 import { ModalSaveBookComponent } from './admin/books/book-list/modal-save-book/modal-save-book.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatTableModule,
     MatDialogModule,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
+    MatBadgeModule
 
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass:NombreDelInterceptorInterceptor, multi:true}],

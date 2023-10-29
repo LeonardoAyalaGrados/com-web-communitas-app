@@ -25,17 +25,34 @@
               </ng-container>
             </mat-error>
           </mat-form-field>
-  
-          <!-- Precio -->
-          <mat-form-field class="mb-2 w-100" appearance="outline">
-            <mat-label>Precio</mat-label>
-            <input matInput type="number" placeholder="Precio" formControlName="precio" />
-            <mat-error>
-              <ng-container *ngIf="controlHasError('precio', 'required')">
-                Este campo es obligatorio
-              </ng-container>
-            </mat-error>
-          </mat-form-field>
+
+          <div class="row">
+            <div class="col">
+             <!-- Precio -->
+                <mat-form-field class="mb-2 w-100" appearance="outline">
+                  <mat-label>Precio</mat-label>
+                  <input matInput type="number" placeholder="Precio" formControlName="precio" />
+                  <mat-error>
+                    <ng-container *ngIf="controlHasError('precio', 'required')">
+                      Este campo es obligatorio
+                    </ng-container>
+                  </mat-error>
+                </mat-form-field>
+            </div>
+          <div class="col">
+          
+            <!-- Stock -->
+                <mat-form-field class="mb-2 w-100" appearance="outline">
+                  <mat-label>Stock</mat-label>
+                  <input matInput type="number" placeholder="Stock" formControlName="stock" />
+                  <mat-error>
+                    <ng-container *ngIf="controlHasError('stock', 'required')">
+                      Este campo es obligatorio
+                    </ng-container>
+                  </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
   
           <!-- Imagen -->
           <div class="mb-3">
@@ -51,17 +68,6 @@
             </mat-error>
             <input type="file" class="d-none" #coverInputFile accept="image/*" (change)="uploadFile($event, 'imagen')">
           </div>
-  
-          <!-- Stock -->
-          <mat-form-field class="mb-2 w-100" appearance="outline">
-            <mat-label>Stock</mat-label>
-            <input matInput type="number" placeholder="Stock" formControlName="stock" />
-            <mat-error>
-              <ng-container *ngIf="controlHasError('stock', 'required')">
-                Este campo es obligatorio
-              </ng-container>
-            </mat-error>
-          </mat-form-field>
   
           <!-- Autor -->
           <mat-form-field class="mb-2 w-100" appearance="outline">
@@ -96,7 +102,9 @@
             </mat-error>
           </mat-form-field>
   
-          <!-- Tapa -->
+        <div class="row">
+          <div class="col">
+              <!-- Tapa -->
           <mat-form-field appearance="fill">
             <mat-label>Tapa</mat-label>
             <mat-select matInput formControlName="tapa">
@@ -106,8 +114,9 @@
               <mat-option value="GRAPAS">GRAPAS</mat-option>
             </mat-select>
           </mat-form-field>
-
-           <!-- Categoria -->
+          </div>
+          <div class="col">
+            <!-- Categoria -->
            <mat-form-field appearance="fill">
             <mat-label>Categoria</mat-label>
             <mat-select matInput formControlName="categoria.idCategoria" (selectionChange)="onCategoriaSeleccionado($event.value)">
@@ -122,20 +131,9 @@
             </mat-select>
           </mat-form-field>
   
-          <!-- Categoría -->
-          <!-- <mat-form-field class="mb-2 w-100" appearance="outline">
-            <mat-label>Categoría</mat-label>
-            <mat-select formControlName="categoria.idCategoria">
-              <mat-option *ngFor="let category of categories" [value]="category.idCategoria">
-                {{ category.nombre }}
-              </mat-option>
-            </mat-select>
-            <mat-error>
-              <ng-container *ngIf="controlHasError('categoria.idCategoria', 'required')">
-                Debes seleccionar una categoría
-              </ng-container>
-            </mat-error>
-          </mat-form-field> -->
+          </div>
+
+        </div>
   
           <div class="text-end">
             <button mat-raised-button color="primary" class="ms-2" [disabled]="myForm.invalid">Crear libro</button>

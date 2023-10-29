@@ -1,17 +1,47 @@
-<mat-toolbar style="background-color:#002A69;">
+<mat-toolbar style="background-color:#002A69;"  class="navbar fixed-top">
   <span><a style="color: white; text-decoration: none;" routerLink="">Communitas</a></span>
   <span class="example-spacer"></span>
+
+
+  <button mat-icon-button [mat-menu-trigger-for]="cartMenu" class="me-2"  [matBadge]="cartItems.length" style="color: white; font-size: medium;">
+    <i class="fa-solid fa-cart-shopping"></i>
+</button>
+
+<mat-menu #cartMenu="matMenu">
+  <ng-container *ngIf="cartItems.length;else cartIsEmptyButton">
+    <button mat-menu-item *ngFor="let item of cartItems">
+        <div class="d-flex gap-2 py-2">
+            <img [src]="item.imagen | imagePipe" alt="" class="mw-96px">
+
+            <div>
+                <div class="fw-bold"> {{ item.titulo }} </div>
+                <p> {{ item.precio| currency }} </p>
+                
+            </div>
+           
+        </div>
+    </button>
+    <button mat-menu-item class="justify-content-center"  routerLink="/cart">
+        Ir a carrito
+    </button>
+  </ng-container>
+   <ng-template  #cartIsEmptyButton>
+    <button mat-menu-item class="justify-content-center">
+        El carrito esta vacío
+    </button>
+   </ng-template>
+</mat-menu>
 
   <ng-container *ngIf="userServices.isLoggedIn(); else loginLink">
     <button mat-button [matMenuTriggerFor]="menu"><i class="fa-solid fa-user" style="color: white;"></i></button>
     <mat-menu #menu="matMenu">
-      <button (click)="logout()">
+      <button (click)="logout()" mat-menu-item class="justify-content-center" style="font-size: medium;">
         Cerrar Sesión <i class="fa-solid fa-right-to-bracket"></i></button>
     </mat-menu>
   </ng-container>
 
   <ng-template #loginLink>
-    <a routerLink="/login" style="color: white;"><i class="fa-solid fa-right-from-bracket"></i></a>
+    <a routerLink="/login" style="color: white; text-decoration: none; font-size: medium;">Iniciar Sesión <i class="fa-solid fa-right-from-bracket"></i></a>
   </ng-template>
 
 </mat-toolbar>
