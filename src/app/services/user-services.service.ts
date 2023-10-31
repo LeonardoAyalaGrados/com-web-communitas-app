@@ -94,8 +94,13 @@ export class UserServicesService {
    return JSON.parse(userLocal);
   }
 
-  public getRol(){
-    let objetoUser= this.getUser();
-    return objetoUser.rol;
+  public getRol() {
+    let objetoUser = this.getUser();
+    if (objetoUser && objetoUser.rol) {
+      return objetoUser.rol;
+    } else {
+      // Puedes manejar el caso en el que 'rol' sea nulo de alguna manera apropiada.
+      return 'Rol no encontrado';
+    }
   }
 }

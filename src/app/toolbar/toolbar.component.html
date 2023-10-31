@@ -1,8 +1,19 @@
-<mat-toolbar style="background-color:#002A69;"  class="navbar fixed-top">
+<mat-toolbar style="background-color:#002A69;">
   <span><a style="color: white; text-decoration: none;" routerLink="">Communitas</a></span>
   <span class="example-spacer"></span>
 
+  <div *ngIf="userServices.getRol()">
+    <ng-container [ngSwitch]="userServices.getRol()">
+      <button mat-icon-button *ngSwitchCase="'USUARIO'" routerLink="/client/profile">
+        <mat-icon style="color: white;">dashboard</mat-icon>
+      </button>
+      <button mat-icon-button *ngSwitchCase="'ADMINISTRADOR'" routerLink="/admin/user-list">
+        <mat-icon style="color: white;">list</mat-icon>
+      </button>
+    </ng-container>
+  </div>
 
+  
   <button mat-icon-button [mat-menu-trigger-for]="cartMenu" class="me-2"  [matBadge]="cartItems.length" style="color: white; font-size: medium;">
     <i class="fa-solid fa-cart-shopping"></i>
 </button>
@@ -11,17 +22,17 @@
   <ng-container *ngIf="cartItems.length;else cartIsEmptyButton">
     <button mat-menu-item *ngFor="let item of cartItems">
         <div class="d-flex gap-2 py-2">
-            <img [src]="item.imagen | imagePipe" alt="" class="mw-96px">
+            <img [src]="item.imagen | imagePipe" alt="" class="mw-96px" style="width: 75px;height:100px ;">
 
             <div>
                 <div class="fw-bold"> {{ item.titulo }} </div>
-                <p> {{ item.precio| currency }} </p>
+                <p> {{ item.precio | currency }} </p>
                 
             </div>
            
         </div>
     </button>
-    <button mat-menu-item class="justify-content-center"  routerLink="/cart">
+    <button mat-menu-item class="justify-content-center"  routerLink="/carrito">
         Ir a carrito
     </button>
   </ng-container>

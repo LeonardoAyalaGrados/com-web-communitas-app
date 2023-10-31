@@ -7,7 +7,7 @@ import { Book } from 'src/model/bookl.model';
 export class CardItemsService {
 
   private _items: Book[]=[];
-  private key='storebook_cart0223';
+  private key='book_card';
 
   constructor() {
     const itemString = localStorage.getItem(this.key);

@@ -29,6 +29,7 @@
     "jquery": "^3.7.1",
     "ngx-captcha": "^13.0.0",
     "ngx-reactive-form": "^1.3.5",
+    "ngx-spinner": "^16.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

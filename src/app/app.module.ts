@@ -39,7 +39,9 @@ import { SolesPipePipe } from './shared/soles-pipe.pipe';
 import { ModalSaveBookComponent } from './admin/books/book-list/modal-save-book/modal-save-book.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
-
+import { CarritoBookComponent } from './carrito-book/carrito-book.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     SidebarClientComponent,
     ClientProfileComponent,
     SolesPipePipe,
-    ModalSaveBookComponent
+    ModalSaveBookComponent,
+    CarritoBookComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +85,9 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatDialogModule,
     MatSelectModule,
     MatMenuModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatProgressSpinnerModule,
+    NgxSpinnerModule
 
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass:NombreDelInterceptorInterceptor, multi:true}],

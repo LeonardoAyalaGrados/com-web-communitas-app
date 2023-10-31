@@ -1,54 +1,69 @@
-<div class="banner">
+<div class="banner" style="margin-top: 70px;">
     <img src="./assets/imagenes/banner.png">
 </div>
 
 
 <div class="container">
-        <h1>Libros</h1>
 
-        <div class="row">
-            <div class="col-2">
-                <!-- Filtros por categoría -->
-                <div class="form-check" *ngFor="let categoria of categorias">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox"
-                            [ngModel]="categoriasSeleccionadas.includes(categoria.idCategoria)"
-                            (ngModelChange)="toggleCategoriaSelection(categoria.idCategoria)"
-                            (change)="filtrarLibrosPorCategoria()">
-                        {{ categoria.nombre }}
-                    </label>
-                </div>
-            </div>
+    <div class="row">
 
-            <div class="col-10">
-                <!-- Lista de libros filtrados -->
-                <div class="row">
-                    <!-- card -->
-                   <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 " *ngFor="let libro of librosFiltrados">
-                    <mat-card class="example-card">
-                        <mat-card-header>
-                          
-                          <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
-                        </mat-card-header>
-                        <img [src]="libro.imagen | imagePipe" alt="" class="mw-96px" style="width:156px; height: 233px;display: block; margin: 0 auto;">
-                        <mat-card-content>
-                            <div class="text-center d-flex align-items-center">
-                                <mat-card-title style="font-size: medium;">{{libro.titulo}}</mat-card-title>
-                              </div>
-                          <p style="color: #83A5F3; font-size: large;">
-                            {{libro.precio| solesPipe}}
-                          </p>
-                        </mat-card-content>
-                        <mat-card-actions>
-                          <!-- <button mat-button color="primary">Ver detalle</button> -->
-                          <button mat-button style="background-color:#FFBE32; color: white; align-items: center; border:none;">Agregar al carrito</button>
-                        </mat-card-actions>
-                      </mat-card>
-                      <br>
+        <div class="col-2">
+            <!-- Filtros por categoría -->
+            <h1 style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Categoria</h1>
 
-                   </div>
-                </div>
+            <div class="form-check" *ngFor="let categoria of categorias">
+                <label class="form-check-label">
+
+                    <input class="form-check-input" type="checkbox"
+                        [ngModel]="categoriasSeleccionadas.includes(categoria.idCategoria)"
+                        (ngModelChange)="toggleCategoriaSelection(categoria.idCategoria)"
+                        (change)="filtrarLibrosPorCategoria()">
+                    {{ categoria.nombre }}
+                </label>
             </div>
         </div>
 
+        <div class="col-10">
+            <!-- Lista de libros filtrados -->
+            <div class="row">
+                <!-- card -->
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 " *ngFor="let libro of librosFiltrados">
+                    <mat-card class="example-card">
+                        <mat-card-header>
+
+                            <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+                        </mat-card-header>
+                        <img [src]="libro.imagen | imagePipe" alt="" class="mw-96px"
+                            style="width:156px; height: 233px;display: block; margin: 0 auto;">
+                        <mat-card-content>
+                            <div class="text-center d-flex align-items-center">
+                                <mat-card-title style="font-size: medium;">{{libro.titulo}}</mat-card-title>
+                            </div>
+                            <p style="color: #83A5F3; font-size: large;">
+                                {{libro.precio| solesPipe}}
+                            </p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button color="primary">Ver detalle</button>
+                            <button mat-button *ngIf="!bookExistInCart(libro);else removeButton"
+                                (click)="addBookToCart(libro)"
+                                style="background-color:#FFBE32; color: white; align-items: center; border:none;">Agregar
+                                al carrito</button>
+
+                            <ng-template #removeButton>
+                                <button mat-raised-button color="warn" (click)="removeBookFromCart(libro)"
+                                    class="w-100">
+                                    <mat-icon>remove_shopping_cart</mat-icon>Remover del carrito
+                                </button>
+                            </ng-template>
+
+                        </mat-card-actions>
+                    </mat-card>
+                    <br>
+
+                </div>
+            </div>
+        </div>
     </div>
+
+</div>

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../services/category.service';
+import { CardItemsService } from '../services/card-items.service';
+import { Book } from 'src/model/bookl.model';
+import { UserServicesService } from '../services/user-services.service';
 
 @Component({
   selector: 'app-home',
@@ -10,12 +13,14 @@ export class HomeComponent implements OnInit{
   categorias:any[]=[];
   categoriasSeleccionadas:number[]=[];
   librosFiltrados:any[]=[];
+  
 
   ngOnInit(): void {
     this.listCategory();
   }
 
-  constructor(private categoryService:CategoryService){
+  constructor(private categoryService:CategoryService, private cardServices:CardItemsService){
+    
   }
 
   listCategory(){
@@ -62,5 +67,16 @@ export class HomeComponent implements OnInit{
       this.categoriasSeleccionadas.push(idCategoria);
     }
   }  
+
+
+  addBookToCart(book:Book){
+    this.cardServices.addItem(book);
+  }
+  removeBookFromCart(book: Book){
+      this.cardServices.removeItem(book);
+  }
+  bookExistInCart(book:Book):boolean{
+    return this.cardServices.itemAlreadyExists(book);
+  }
   
 }

@@ -10,6 +10,7 @@ import { SidebarClientComponent } from './client/sidebar-client/sidebar-client.c
 import { ClientProfileComponent } from './client/client-profile/client-profile.component';
 import { AuthAdminGuard } from 'src/helpers/authAdmin.guard';
 import { AuthClientGuard } from 'src/helpers/authClient.guard';
+import { CarritoBookComponent } from './carrito-book/carrito-book.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent, pathMatch:"full"},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path:"client", component:SidebarClientComponent,children:[
                                 {path:"profile", component:ClientProfileComponent,canActivate:[AuthClientGuard]}
   ]},
+  {path:"carrito",component:CarritoBookComponent}
 ];
 
 @NgModule({

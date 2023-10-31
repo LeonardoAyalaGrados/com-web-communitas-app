@@ -10,7 +10,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Nombre</mat-label>
-                <input matInput type="text" placeholder="" formControlName="nombre"  (keyup)="createSlugNombre()">
+                <input matInput type="text" placeholder="" formControlName="nombre" (keyup)="createSlugNombre()">
                 <mat-error>
                     <ng-container *ngIf="controlHasError('nombre','required')">
                         Este campo es obligatorio
@@ -36,6 +36,10 @@
                     <ng-container *ngIf="controlHasError('celular','required')">
                         Este campo es obligatorio
                     </ng-container>
+                    <ng-container *ngIf="controlHasError('celular','minLength')">
+                        El minimo de caracteres debe 9
+                    </ng-container>
+
                 </mat-error>
             </mat-form-field>
 
@@ -61,11 +65,11 @@
                     <ng-container *ngIf="controlHasError('contraseña','required')">
                         Este campo es obligatorio
                     </ng-container>
-                        <ng-container *ngIf="controlHasError('contraseña','minLength')">
-                            El minimo de caracteres debe 8
-                        </ng-container>
+                    <ng-container *ngIf="controlHasError('contraseña','minLength')">
+                        El minimo de caracteres debe 8
+                    </ng-container>
                 </mat-error>
-            </mat-form-field>   
+            </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>Direccion</mat-label>

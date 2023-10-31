@@ -1,3 +1,5 @@
+import { SolesPipePipe } from "src/app/shared/soles-pipe.pipe";
+
 export interface BookPage {
     content:          Book[];
     pageable:         Pageable;

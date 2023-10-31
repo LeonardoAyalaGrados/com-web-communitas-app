@@ -1,0 +1,49 @@
+<div class="container">
+    <h1 class="fw-bold">Mi carrito</h1>
+    <div class="row mt-3 justify-content-between">
+  
+      <div class="col-md-6">
+          <h3 class="fw-bold">Ítems del carrito</h3>
+  
+          <div *ngIf="cartItems.length;else cartIsEmptyButton">
+              <div *ngFor="let item of cartItems">
+                  <div class="d-flex gap-2 py-2">
+                      <img [src]="item.imagen | imagePipe" alt="" style="width: 100px; height: 135px;">
+      
+                      <div>
+                          <div class="fw-bold">Titulo: {{ item.titulo }} </div>
+                          <div class="fw-bold">Stock : {{ item.stock }} </div>
+                          <p> Precio :{{ item.precio| currency }} </p>
+                      </div>
+                     
+                  </div>
+                  <button mat-button color="warn" (click)="remove(item)">
+                      remover
+              </button>
+              </div>
+            </div>
+             <ng-template  #cartIsEmptyButton>
+              <div class="justify-content-center">
+                  El carrito esta vacío
+              </div>
+             </ng-template>
+      </div>
+  
+      <div class="col-md-4 col-lg-3">
+        <h3 class="fw-bold">Resumen</h3>
+        <h5 class="fw-bold text-end">Total</h5>
+        <div class="fs-2 fw-bold text-end my-3">
+              {{total | currency}}
+        </div>
+        <button class="w-100" mat-raised-button color="primary" (click)="generarCompra()">Pagar con Visa<mat-icon>visa</mat-icon></button>
+        <button class="w-100 mt-3"  mat-raised-button color="secundary" routerLink="" >Seguir comprando</button>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner size="medium" type="ball-scale-multiple"></ngx-spinner>
+  
+  <!-- <ngx-spinner
+ size="medium"
+  template="<img src='https://media.giphy.com/media/o8igknyuKs6aY/giphy.gif' />"
+>
+</ngx-spinner> -->

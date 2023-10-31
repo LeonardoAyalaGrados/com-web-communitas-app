@@ -1,4 +1,4 @@
-<div class="contenedor-padre">
+<div class="contenedor-padre" >
     <mat-toolbar-row style="height: 40px;">
       <button (click)="cajon.toggle()" mat-icon-button>
         <mat-icon color="warn">menu</mat-icon>
@@ -50,7 +50,11 @@
       </mat-accordion>
     </mat-sidenav>
     <mat-sidenav-content class="padding-10">
+      <div style="margin-top:10px">
      <router-outlet></router-outlet>
+
+      </div>
+
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
