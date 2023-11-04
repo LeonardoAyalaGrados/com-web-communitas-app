@@ -42,6 +42,11 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { CarritoBookComponent } from './carrito-book/carrito-book.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CompraModalComponent } from './carrito-book/compra-modal/compra-modal.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+import { DetalleLibroModalComponent } from './home/detalle-libro-modal/detalle-libro-modal.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +64,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ClientProfileComponent,
     SolesPipePipe,
     ModalSaveBookComponent,
-    CarritoBookComponent
+    CarritoBookComponent,
+    CompraModalComponent,
+    DetalleLibroModalComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +94,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatMenuModule,
     MatBadgeModule,
     MatProgressSpinnerModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatCheckboxModule,
+    MatRadioModule
 
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass:NombreDelInterceptorInterceptor, multi:true}],

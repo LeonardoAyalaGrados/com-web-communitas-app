@@ -5,6 +5,8 @@ import { CartItem } from 'src/model/cart.model';
 import { UserServicesService } from '../services/user-services.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { timeout } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { CompraModalComponent } from './compra-modal/compra-modal.component';
 
 @Component({
   selector: 'app-carrito-book',
@@ -14,12 +16,13 @@ import { timeout } from 'rxjs';
 export class CarritoBookComponent implements OnInit{
   itemCarrito: CartItem[] = [];
   totalAPagar: number = 0; 
+  tipoEntrega: string;
 
   ngOnInit(): void {
     
   }
 
-  constructor(private spinnerService: NgxSpinnerService ,private cardServices:CardItemsService,private userServices: UserServicesService){
+  constructor(public dialogo: MatDialog,private spinnerService: NgxSpinnerService ,private cardServices:CardItemsService,public userServices: UserServicesService){
   }
 
   get cartItems(){
@@ -44,13 +47,15 @@ export class CarritoBookComponent implements OnInit{
 
     const formData = {
       idUsuario: idUsuario,
-      librosSeleccionados: cartItems
+      tipoDeEntrega:this.tipoEntrega,
+      librosSeleccionados: cartItems,
     }
     
     this.showSpinner();
     setTimeout(()=>{
       console.log(formData);
-    },5000);
+      this.modalGenerarCompra();
+    },0);
   }
 
 
@@ -59,6 +64,20 @@ export class CarritoBookComponent implements OnInit{
 
     setTimeout(() => {
       this.spinnerService.hide();
-    }, 5000); 
+    }, 0); 
+  }
+
+
+  modalGenerarCompra(){
+    this.dialogo
+    .open(CompraModalComponent, {
+      // data: `¿Te gusta programar en TypeScript?`
+    })
+    .afterClosed()
+    .subscribe((confirmado: Boolean) => {
+      if (confirmado) {
+      }
+      
+    });
   }
 }

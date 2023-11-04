@@ -1,0 +1,36 @@
+<div style="max-width: 700px;">
+    <div class="container">
+        <h3><strong>Detalle Artítulo</strong></h3>
+        <div class="row">
+            <div class="col-12 col-lg-4">
+                <img [src]="libro.imagen | imagePipe" alt="" class="mw-96px img-responsive"
+                    style="max-width: 100%; max-height: 200px; height: auto; display: block; margin: 0 auto;">
+            </div>
+            <div class="col-12 col-lg-8">
+                <p><strong>Titulo :</strong> {{libro.titulo}}</p>
+                <p><strong>Autor :</strong> {{libro.autor}}</p>
+                <p><strong>Año :</strong> {{libro.anio}}</p>
+                <p><strong>Páginas :</strong> {{libro.paginas}}</p>
+                <p><strong>Tapa :</strong> {{libro.tapa}}</p>
+                <p>
+                    <strong>Precio:</strong>
+                    {{libro.precio| solesPipe}}
+                </p>
+            </div>
+        </div>
+        <div style="margin-top: 10px;">
+            <p><strong>Descripción :</strong></p>
+            <p>{{libro.descripcion}}</p>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button *ngIf="!bookExistInCart(libro);else removeButton" class="w-100" (click)="addBookToCart(libro)"
+                style="background-color:#FFBE32; color: white; align-items: center; border:none;">Agregar al carrito</button>
+
+            <ng-template #removeButton>
+                <button mat-raised-button color="warn" (click)="removeBookFromCart(libro)" class="w-100">
+                    <mat-icon>remove_shopping_cart</mat-icon>Remover del carrito
+                </button>
+            </ng-template>
+        </div>
+    </div>
+</div>

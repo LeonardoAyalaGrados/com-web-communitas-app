@@ -28,6 +28,22 @@
               </div>
              </ng-template>
       </div>
+
+      
+        <!-- Tu código de entrega aquí -->
+        <div class="col-md-4 col-lg-3">
+          <form #checkoutForm="ngForm">
+          <h3 class="fw-bold">Método de entrega</h3>
+          <section class="example-section">
+            <mat-radio-group required name="tipoEntrega" [(ngModel)]="tipoEntrega">
+              <mat-radio-button class="example-margin" value="RECOJO_TIENDA">Recojo en Tienda</mat-radio-button>
+              <mat-radio-button class="example-margin" value="ENTREGA_DOMICILIO">Entrega a Domicilio</mat-radio-button>
+            </mat-radio-group>
+          </section>
+          </form>
+        </div>
+      
+      
   
       <div class="col-md-4 col-lg-3">
         <h3 class="fw-bold">Resumen</h3>
@@ -35,7 +51,15 @@
         <div class="fs-2 fw-bold text-end my-3">
               {{total | currency}}
         </div>
-        <button class="w-100" mat-raised-button color="primary" (click)="generarCompra()">Pagar con Visa<mat-icon>visa</mat-icon></button>
+        
+          <ng-container *ngIf="userServices.isLoggedIn(); else botonIniciarSesion">
+            <button class="w-100" mat-raised-button color="primary" (click)="generarCompra()" [disabled]="!checkoutForm.valid">Pagar con Visa<mat-icon>visa</mat-icon></button>
+          </ng-container>
+          <ng-template #botonIniciarSesion>
+            <button class="w-100" mat-raised-button color="warn" routerLink="/login" >Debe inciar sesión<mat-icon> call_made</mat-icon></button>
+          </ng-template>
+
+
         <button class="w-100 mt-3"  mat-raised-button color="secundary" routerLink="" >Seguir comprando</button>
       </div>
     </div>

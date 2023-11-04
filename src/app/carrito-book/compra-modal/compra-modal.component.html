@@ -1,0 +1,63 @@
+<div class="container" style="height: 350px;">
+    <div style="margin: 10px;">
+        <div class="row">
+            <div class="col-md-8 col-sm-8">
+                <h1 style="font-size: medium;" mat-dialog-title>Paga con tu tarjeta</h1>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <img src="./assets/imagenes/visa-mastercard.png" style="width: 130px; height:60px ;">
+            </div>
+            
+        </div>
+    </div>
+    <div>
+        <div class="">
+            <form [formGroup]="form" (ngSubmit)="generarCompra()" class="example-form">
+    
+                <mat-form-field class="example-full-width">
+                    <mat-label>Número de tarjeta</mat-label>
+                    <input matInput type="number" maxlength="16" placeholder="1234 1234 1234 1234"
+                        formControlName="creditCard">
+                    <mat-icon matSuffix>credit_card</mat-icon>
+                    <mat-error>
+                        <ng-container *ngIf="controlHasError('creditCard','required')">
+                            Este campo es obligatorio
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+    
+    
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field>
+                            <mat-label>Fecha de caducidad</mat-label>
+                            <input matInput type="number" placeholder="MM/YY" formControlName="creditCardDate">
+                            <mat-error>
+                                <ng-container *ngIf="controlHasError('creditCardDate','required')">
+                                    Este campo es obligatorio
+                                </ng-container>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="col">
+                        <mat-form-field>
+                            <mat-label>Código de verificación</mat-label>
+                            <input matInput type="number" placeholder="CVV" formControlName="creditCardCvv">
+                            <mat-error>
+                                <ng-container *ngIf="controlHasError('creditCardCvv','required')">
+                                    Este campo es obligatorio
+                                </ng-container>
+                            </mat-error>
+                        </mat-form-field>
+    
+                    </div>
+    
+                </div>
+            </form>
+            <div class="text text-center">
+                <button class="col-md-8 col-sm-8" [disabled]="form.invalid" mat-raised-button color="warn">Comprar</button>
+            </div>
+        </div>
+    </div>
+</div>

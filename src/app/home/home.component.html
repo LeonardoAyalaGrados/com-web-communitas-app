@@ -1,4 +1,4 @@
-<div class="banner" style="margin-top: 70px;">
+<div class="banner">
     <img src="./assets/imagenes/banner.png">
 </div>
 
@@ -44,7 +44,7 @@
                             </p>
                         </mat-card-content>
                         <mat-card-actions>
-                            <button mat-button color="primary">Ver detalle</button>
+                            <button mat-button color="primary" (click)="modalbuscarLibroPorId(libro.idLibro)">Ver detalle</button>
                             <button mat-button *ngIf="!bookExistInCart(libro);else removeButton"
                                 (click)="addBookToCart(libro)"
                                 style="background-color:#FFBE32; color: white; align-items: center; border:none;">Agregar

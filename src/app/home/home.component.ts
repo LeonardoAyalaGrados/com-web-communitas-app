@@ -3,6 +3,8 @@ import { CategoryService } from '../services/category.service';
 import { CardItemsService } from '../services/card-items.service';
 import { Book } from 'src/model/bookl.model';
 import { UserServicesService } from '../services/user-services.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DetalleLibroModalComponent } from './detalle-libro-modal/detalle-libro-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,7 @@ export class HomeComponent implements OnInit{
     this.listCategory();
   }
 
-  constructor(private categoryService:CategoryService, private cardServices:CardItemsService){
+  constructor(private categoryService:CategoryService, private cardServices:CardItemsService,public dialogo: MatDialog){
     
   }
 
@@ -77,6 +79,23 @@ export class HomeComponent implements OnInit{
   }
   bookExistInCart(book:Book):boolean{
     return this.cardServices.itemAlreadyExists(book);
+  }
+
+  modalbuscarLibroPorId(idLibro:any){
+    console.log(idLibro);
+    const libros=this.obtenerTodosLosLibros();
+
+    this.dialogo
+    .open(DetalleLibroModalComponent, {
+      data: {idLibro, libros }
+    })
+    .afterClosed()
+    .subscribe((confirmado: Boolean) => {
+      if (confirmado) {
+      }
+      
+    });
+
   }
   
 }
