@@ -11,6 +11,7 @@ import { ClientProfileComponent } from './client/client-profile/client-profile.c
 import { AuthAdminGuard } from 'src/helpers/authAdmin.guard';
 import { AuthClientGuard } from 'src/helpers/authClient.guard';
 import { CarritoBookComponent } from './carrito-book/carrito-book.component';
+import { PedidosComponent } from './client/pedidos/pedidos.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent, pathMatch:"full"},
@@ -21,7 +22,8 @@ const routes: Routes = [
   ]},
   {path:"register",component:RegisterComponent},
   {path:"client", component:SidebarClientComponent,children:[
-                                {path:"profile", component:ClientProfileComponent,canActivate:[AuthClientGuard]}
+                                {path:"profile", component:ClientProfileComponent,canActivate:[AuthClientGuard]},
+                                {path:"orders" ,component:PedidosComponent,canActivate:[AuthClientGuard]}
   ]},
   {path:"carrito",component:CarritoBookComponent}
 ];

@@ -46,6 +46,9 @@ import { CompraModalComponent } from './carrito-book/compra-modal/compra-modal.c
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { DetalleLibroModalComponent } from './home/detalle-libro-modal/detalle-libro-modal.component';
+import { PedidosComponent } from './client/pedidos/pedidos.component';
+import { OrdersComponent } from './admin/orders/orders.component';
+import { DetallePedidoModalComponent } from './client/pedidos/detalle-pedido-modal/detalle-pedido-modal.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import { DetalleLibroModalComponent } from './home/detalle-libro-modal/detalle-l
     ModalSaveBookComponent,
     CarritoBookComponent,
     CompraModalComponent,
-    DetalleLibroModalComponent
+    DetalleLibroModalComponent,
+    PedidosComponent,
+    OrdersComponent,
+    DetallePedidoModalComponent
   ],
   imports: [
     BrowserModule,
