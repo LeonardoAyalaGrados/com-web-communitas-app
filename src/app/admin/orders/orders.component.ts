@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { VentaLibroService } from 'src/app/services/venta-libro.service';
 import { VentaOrdenService } from 'src/app/services/venta-orden.service';
 import { DetalleOrdenModalComponent } from './detalle-orden-modal/detalle-orden-modal.component';
+import { CambiarEstadoModalComponent } from './cambiar-estado-modal/cambiar-estado-modal.component';
 
 @Component({
   selector: 'app-orders',
@@ -28,7 +29,6 @@ export class OrdersComponent implements OnInit {
     this.ventaOrdenServices.listVentaOrdenConUsuario().subscribe(
       (data)=>{
         this.listVentaOrden=data;
-        this.dataUsuario=this.listVentaOrden.flatMap(orden=>orden.usuario);
           console.log(data);
       },
       (error)=>{
@@ -66,5 +66,31 @@ export class OrdersComponent implements OnInit {
       );
     }
 
-    editarEstado(idVentaOrden:any){}
+    editarEstadoModal(idVentaOrden:any){
+      const ventaOrdenes=this.listVentaOrden;
+      console.log(ventaOrdenes);
+      this.dialogo
+      .open(CambiarEstadoModalComponent, {
+        data: {idVentaOrden,ventaOrdenes}
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+        }
+        
+      });
+    }
+
+    getColorPorEstado(estado: string): { [key: string]: string } {
+      switch (estado) {
+        case 'PENDIENTE':
+          return { color: 'red' };
+        case 'EN_PROCESO':
+          return { color: 'blue' };
+        case 'ATENDIDO':
+          return { color: 'green' };
+        default:
+          return {};
+      }
+    }
 }

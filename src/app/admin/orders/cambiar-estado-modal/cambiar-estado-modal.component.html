@@ -1,0 +1,18 @@
+<div class="ng-container" style="height: 230px;">
+    <h1 mat-dialog-title>Cambiar estado de orden</h1>
+    <form [formGroup]="form" (ngSubmit)="confirmar()" class="text text-center">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Estado</mat-label>
+                <mat-select matInput type="text" formControlName="estado">
+                    <mat-option value="PENDIENTE">PENDIENTE</mat-option>
+                    <mat-option value="EN_PROCESO">EN PROCESO</mat-option>
+                    <mat-option value="ATENDIDO">ATENDIDO</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <button mat-raised-button style="background-color:#FF5A5F; color: white; margin-top: 10px;"
+            [disabled]="form.invalid">Cambiar estado</button>
+    </form>
+</div>

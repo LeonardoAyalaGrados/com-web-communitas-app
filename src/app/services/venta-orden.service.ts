@@ -17,4 +17,8 @@ export class VentaOrdenService {
   listVentaOrdenConUsuario():Observable<any>{
     return this.httpClient.get(`${this.apiVentaOrden}/list-user-orders`);
   }
+
+  editEstadoVentaOrden(idVentOrden:any):Observable<any>{
+    return this.httpClient.put(`${this.apiVentaOrden}/estado/`,idVentOrden);
+  }
 }
