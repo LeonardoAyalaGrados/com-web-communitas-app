@@ -2,7 +2,7 @@
     <ng-container *ngIf="listOrdenes">
       <div class="row">
           <div class="col-md-6 col-sm-4">
-            <h1>Lista de usuarios</h1>
+            <h1>Mis Pedidos</h1>
           </div>
       </div>
       <table mat-table [dataSource]="listOrdenes">
@@ -19,7 +19,7 @@
 
           <ng-container matColumnDef="total">
               <th mat-header-cell *matHeaderCellDef> Total</th>
-              <td mat-cell *matCellDef="let orden"> {{ orden.total}} </td>
+              <td mat-cell *matCellDef="let orden"> {{ orden.total| solesPipe}} </td>
           </ng-container>
     
           <ng-container matColumnDef="tipoEntrega">

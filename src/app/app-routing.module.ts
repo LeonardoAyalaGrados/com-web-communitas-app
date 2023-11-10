@@ -12,13 +12,15 @@ import { AuthAdminGuard } from 'src/helpers/authAdmin.guard';
 import { AuthClientGuard } from 'src/helpers/authClient.guard';
 import { CarritoBookComponent } from './carrito-book/carrito-book.component';
 import { PedidosComponent } from './client/pedidos/pedidos.component';
+import { OrdersComponent } from './admin/orders/orders.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent, pathMatch:"full"},
   {path:"login",component:LoginComponent},
   {path:"admin", component:SidebarAdminComponent, children:[
                              {path:"user-list", component:UserListComponent,canActivate:[AuthAdminGuard]},
-                             {path:"book-list", component:BookListComponent,canActivate:[AuthAdminGuard]}
+                             {path:"book-list", component:BookListComponent,canActivate:[AuthAdminGuard]},
+                             {path:"orders-admin", component:OrdersComponent, canActivate:[  AuthAdminGuard]}
   ]},
   {path:"register",component:RegisterComponent},
   {path:"client", component:SidebarClientComponent,children:[

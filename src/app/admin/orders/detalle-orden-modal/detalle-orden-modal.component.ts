@@ -1,22 +1,21 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PedidosComponent } from '../pedidos.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-detalle-pedido-modal',
-  templateUrl: './detalle-pedido-modal.component.html',
-  styleUrls: ['./detalle-pedido-modal.component.css']
+  selector: 'app-detalle-orden-modal',
+  templateUrl: './detalle-orden-modal.component.html',
+  styleUrls: ['./detalle-orden-modal.component.css']
 })
-export class DetallePedidoModalComponent implements OnInit{
+export class DetalleOrdenModalComponent implements OnInit{
   listVentaLibros:any[]=[];
   ventaLibroDetalle:any[]=[];
-
+  
   ngOnInit(): void {
     this.buscarVentaLibroPorId();
-    
   }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dataIdVentaOrden: { idVentaOrden: any, ventaLibros:any }){
+  constructor(@Inject(MAT_DIALOG_DATA) public dataIdVentaOrden: { idVentaOrden: any, ventaLibros:any,usuarioOrden:any } ){
+    console.log(dataIdVentaOrden.usuarioOrden);
   }
 
   buscarVentaLibroPorId(){
