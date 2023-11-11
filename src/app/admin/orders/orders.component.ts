@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { VentaLibroService } from 'src/app/services/venta-libro.service';
 import { VentaOrdenService } from 'src/app/services/venta-orden.service';
 import { DetalleOrdenModalComponent } from './detalle-orden-modal/detalle-orden-modal.component';
 import { CambiarEstadoModalComponent } from './cambiar-estado-modal/cambiar-estado-modal.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy{
   dataUsuario:any;
+  subcrip:Subscription;
   listVentaOrden:any[]=[];
   listVentaLibros:any[]=[];
   isplayedColumns: string[] = ['idVentaOrden', 'total', 'estado', 'tipoEntrega','creadoEn','distrito','idUsuario','usuario','celular','correo','actions'];
@@ -19,10 +21,19 @@ export class OrdersComponent implements OnInit {
   
   ngOnInit(): void {
     this.listVentaOrdenUsers();
+
+    //Utizamos subject para poder emitir eventos
+    this.subcrip=this.ventaOrdenServices.refresh$.subscribe(()=>{
+      this.listVentaOrdenUsers();
+      console.log("evento");
+    });
     this.listVentaLibroTotal();
   }
 
   constructor(public dialogo: MatDialog,private ventaOrdenServices:VentaOrdenService, private ventaLibroServices:VentaLibroService){
+  }
+  ngOnDestroy(): void {
+   this.subcrip.unsubscribe();
   }
 
   listVentaOrdenUsers(){
