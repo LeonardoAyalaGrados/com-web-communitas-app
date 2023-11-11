@@ -12,13 +12,12 @@ import { UserServicesService } from 'src/app/services/user-services.service';
 })
 export class ModalEditComponent implements OnInit{
   usuarioEncontrado:any;
-  idUsuarioParametro:any;
   cadena:string;
   myForm:FormGroup;
   distritos:any[]=[];
   public idDistritoMatSelect:number;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dataIdUsuario: { userId: any }, private usuarioServices:UserServicesService ,
+  constructor(@Inject(MAT_DIALOG_DATA) public dataIdUsuario: { idUsuario: any }, private usuarioServices:UserServicesService ,
                          private districtServices:DistrictService,public dialogo: MatDialogRef<ModalEditComponent> ,private fb:FormBuilder, private snackBar:MatSnackBar){
     this.myForm=this.fb.group({
       nombre:['',[Validators.required,Validators.minLength(3)]],
@@ -35,33 +34,16 @@ export class ModalEditComponent implements OnInit{
     );
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     console.log(this.dataIdUsuario);
     this.listarDistritos();
     
-    this.buscarUsuarioPorId();
+    await  this.buscarUsuarioPorId();
 
-  }
-
-// Se crea esta funcion ya que desde el @Injec dataIdUsuario por defecto nos manda un valor 
-// del tipo objeto ejemplo: {idUsuario:2} y solo necesitamos el valor del id
-
-  recortarHastaPrimerDosPuntos(cadena:string) {
-    const indiceDosPuntos = cadena.indexOf(':');
-    if (indiceDosPuntos !== -1) {
-      const numeroTexto=cadena.substring(indiceDosPuntos + 1).trim();
-      const numero = parseInt(numeroTexto);
-    return isNaN(numero) ? null : numero;
-    } else {
-      return cadena; // Si no se encuentra el dos puntos, devuelve la cadena original.
-    }
   }
 
   buscarUsuarioPorId(){
-    const cadena =JSON.stringify(this.dataIdUsuario);
-     this.idUsuarioParametro= this.recortarHastaPrimerDosPuntos(cadena);
-
-    this.usuarioServices.findById(this.idUsuarioParametro).subscribe(
+    this.usuarioServices.findById(this.dataIdUsuario.idUsuario).subscribe(
       (data)=>{
           this.usuarioEncontrado=data;
           console.log(data);
@@ -69,14 +51,6 @@ export class ModalEditComponent implements OnInit{
 
           this.idDistritoMatSelect=data.distrito;
           console.log(this.idDistritoMatSelect);
-          // const distritoControl = this.myForm.get('distrito.idDistrito');
-          // if (distritoControl) { // Verifica que distritoControl no sea null
-          //   const distritoId = data.nombreDistrito;
-          //   distritoControl.setValue(distritoId);
-          //   console.log(data.distrito);
-          //   console.log("cons distritoId :"+ distritoId);
-          // }
-          
           
       },
       (error)=>{
