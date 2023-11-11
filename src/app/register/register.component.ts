@@ -86,7 +86,7 @@ export class RegisterComponent implements OnInit {
   }
 
   createSlug() {
-    const emailValue = this.myForm!.controls['correo'].value;
+    const emailValue = this.myForm!.controls['email'].value;
     const safeCharacters = emailValue
       .toLowerCase()
       .replace(/\s+/g, '-') // Replace spaces with -
@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit {
       .replace(/^-+/, '') // Trim - from the start of text
       .replace(/-+$/, '') // Trim - from the end of text
       .replace(/[^a-zA-Z0-9@._-]/g, ''); // Remove characters other than letters, numbers, @, . (dot), hyphens, and underscores
-    this.myForm!.controls['correo'].setValue(safeCharacters);
+    this.myForm!.controls['email'].setValue(safeCharacters);
   }
 
 

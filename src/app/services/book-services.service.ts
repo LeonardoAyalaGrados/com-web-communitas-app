@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { enviroment } from 'src/enviroment/enviroment';
 import { BookPage } from 'src/model/bookl.model';
 
@@ -9,8 +9,14 @@ import { BookPage } from 'src/model/bookl.model';
 })
 export class BookServicesService {
 
-   apiBook:string=enviroment.apiURLAdminBooks;
+  apiBook:string=enviroment.apiURLAdminBooks;
+  private _refresh$=new Subject<void>();
   constructor(private httpClient:HttpClient) { }
+
+
+  get refresh$(){
+    return this._refresh$;
+  }
 
   paginate(size: number = 5, page: number = 0): Observable<BookPage> {
     let params = new HttpParams();
@@ -26,6 +32,11 @@ export class BookServicesService {
 }
 
   saveBook(book:any):Observable<any>{
-    return this.httpClient.post(`${this.apiBook}/save`,book);
+    return this.httpClient.post(`${this.apiBook}/save`,book)
+    .pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    );
   }
 }

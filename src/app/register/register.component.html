@@ -15,6 +15,9 @@
                     <ng-container *ngIf="controlHasError('nombre','required')">
                         Este campo es obligatorio
                     </ng-container>
+                    <ng-container *ngIf="controlHasError('nombre','minLength')">
+                        El minimo de caracteres son 3
+                    </ng-container>
                 </mat-error>
             </mat-form-field>
 
@@ -24,6 +27,9 @@
                 <mat-error>
                     <ng-container *ngIf="controlHasError('apellido','required')">
                         Este campo es obligatorio
+                    </ng-container>
+                    <ng-container *ngIf="controlHasError('apellido','minLength')">
+                        El minimo de caracteres son 5
                     </ng-container>
                 </mat-error>
             </mat-form-field>
@@ -37,7 +43,7 @@
                         Este campo es obligatorio
                     </ng-container>
                     <ng-container *ngIf="controlHasError('celular','minLength')">
-                        El minimo de caracteres debe 9
+                        El numero de caracteres debe ser 9
                     </ng-container>
 
                 </mat-error>
@@ -73,7 +79,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Direccion</mat-label>
-                <input matInput type="text" placeholder="" formControlName="direccion">
+                <input matInput type="text" minlength="10" placeholder="" formControlName="direccion">
                 <mat-error>
                     <ng-container *ngIf="controlHasError('direccion','required')">
                         Este campo es obligatorio

@@ -1,6 +1,6 @@
 import { group } from '@angular/animations';
 import { Component,Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DistrictService } from 'src/app/services/district.service';
@@ -19,11 +19,11 @@ export class ModalSaveUserComponent implements OnInit {
   constructor(private districtService: DistrictService ,public dialogo: MatDialogRef<ModalSaveUserComponent>,
     @Inject(MAT_DIALOG_DATA) public mensaje: string,private fb:FormBuilder, private snackBar: MatSnackBar,private usuarioService: UserServicesService){
     this.myForm=this.fb.group({
-      nombre:['',Validators.required],
-      apellido:['',Validators.required],
-      celular:['',Validators.required],
+      nombre:['',[Validators.required,Validators.minLength(3)]],
+      apellido:['',[Validators.required,Validators.minLength(5)]],
+      celular:['',[Validators.required, Validators.minLength(9)]],
       email:['',[Validators.required,this.customEmailValidator]],
-      contraseña:['',Validators.required],
+      contraseña:['',[Validators.required, this.validacionLongitudContraseña(8)]],
       rol:['',Validators.required],
       direccion:['',Validators.required],
       // distrito:[{idDistrito:[Validators.required]}],
@@ -59,6 +59,45 @@ export class ModalSaveUserComponent implements OnInit {
       .replace(/[^a-zA-Z0-9@.-]/g, ''); // Remove characters other than letters, numbers, @, . (dot), and hyphens
   
     this.myForm!.controls['email'].setValue(safeCharacters);
+  }
+
+  
+  createSlugNombre() {
+    const nombre = this.myForm!.controls['nombre'].value;
+    const nombreLimpio = nombre.replace(/[^a-zA-Z\s]/g, '');
+    this.myForm!.controls['nombre'].setValue(nombreLimpio);
+  }
+
+
+  createSlugApellido() {
+    const apellido = this.myForm!.controls['apellido'].value;
+    const apellidoLimpio = apellido.replace(/[^a-zA-Z\s]/g, '');
+    this.myForm!.controls['apellido'].setValue(apellidoLimpio);
+  }
+
+
+  createSlugCelular() {
+    const celular = this.myForm!.controls['celular'].value;
+    
+    // Reemplaza todo lo que no sea un dígito con una cadena vacía
+    let celularLimpio = celular.replace(/[^\d]/g, '');
+  
+    // Agrega un "9" al principio si no comienza con "9"
+    if (!celularLimpio.startsWith('9')) {
+      celularLimpio = '9' + celularLimpio;
+    }
+  
+    this.myForm!.controls['celular'].setValue(celularLimpio);
+  }
+
+
+  validacionLongitudContraseña(minLength: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value && control.value.length < minLength) {
+        return { passwordLength: true };
+      }
+      return null;
+    };
   }
   
 

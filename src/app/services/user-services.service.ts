@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map, tap } from 'rxjs';
 import { enviroment } from 'src/enviroment/enviroment';
-import { User, UserPage } from 'src/model/user.model';
+import { Sort, User, UserPage } from 'src/model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,11 @@ export class UserServicesService {
   apiURLAdminUsers:string=enviroment.apiURLAdminUsers;  
   apiURLHome:string=enviroment.apiURLHome;  
 
+  private _refresh$=new Subject<void>();
+
+  get refresh$(){
+    return this._refresh$;
+  }
 
   constructor(private httpClient:HttpClient) { 
   }
@@ -20,7 +25,7 @@ export class UserServicesService {
     let params = new HttpParams();
     params = params.append('size', size);
     params = params.append('page', page);
-    params = params.append('sort', 'idUsuario');
+    params = params.append('sort', 'idUsuario,desc');
 
     return this.httpClient.get<UserPage>(`${this.apiURLAdminUsers}`, { params });
   }
@@ -29,11 +34,19 @@ export class UserServicesService {
     return this.httpClient.get(`${this.apiURLAdminUsers}/list`);
   }
   saveUser(user:any):Observable<any>{
-     return this.httpClient.post<any>(`${this.apiURLAdminUsers}/save`,user);
+     return this.httpClient.post<any>(`${this.apiURLAdminUsers}/save`,user)
+     .pipe(
+      tap(()=>{this._refresh$.next();}
+      )
+    );;
   }
 
   saveUserClient(user:any):Observable<any>{
-      return this.httpClient.post<any>(`${this.apiURLHome}/save`,user);
+      return this.httpClient.post<any>(`${this.apiURLHome}/save`,user)
+      .pipe(
+        tap( ()=>{this._refresh$.next();}
+        )
+      );
   }
 
   findById(userId:any):Observable<any>{
