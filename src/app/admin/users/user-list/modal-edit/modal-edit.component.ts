@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,9 +16,10 @@ export class ModalEditComponent implements OnInit{
   myForm:FormGroup;
   distritos:any[]=[];
   public idDistritoMatSelect:number;
+ 
 
   constructor(@Inject(MAT_DIALOG_DATA) public dataIdUsuario: { idUsuario: any }, private usuarioServices:UserServicesService ,
-                         private districtServices:DistrictService,public dialogo: MatDialogRef<ModalEditComponent> ,private fb:FormBuilder, private snackBar:MatSnackBar){
+                  private districtServices:DistrictService,public dialogo: MatDialogRef<ModalEditComponent> ,private fb:FormBuilder, private snackBar:MatSnackBar){
     this.myForm=this.fb.group({
       nombre:['',[Validators.required,Validators.minLength(3)]],
       apellido:['',[Validators.required,Validators.minLength(5)]],
@@ -34,11 +35,12 @@ export class ModalEditComponent implements OnInit{
     );
   }
 
-  async ngOnInit(): Promise<void> {
-    console.log(this.dataIdUsuario);
+   ngOnInit():void {    
     this.listarDistritos();
+    setTimeout(()=>{
+      this.buscarUsuarioPorId();
+    },3000);
     
-    await  this.buscarUsuarioPorId();
 
   }
 
@@ -60,6 +62,24 @@ export class ModalEditComponent implements OnInit{
   }
 
   editatUsuario(){
+    this.usuarioServices.editUser(this.dataIdUsuario.idUsuario,this.myForm.value).subscribe(
+      (data)=>{
+        console.log(data);
+        this.snackBar.open("Usuario editado","exito",{
+          duration:4000,
+          verticalPosition:"top"
+        });
+        this.cerrarDialogo();
+      },
+      (error)=>{
+        console.log(error);
+        this.snackBar.open("No se puedo editar","ok",{
+          duration:4000,
+          verticalPosition:"top"
+        });
+        this.cerrarDialogo();
+      }
+    );
     
   }
 

@@ -58,6 +58,15 @@ export class UserServicesService {
     
   }
 
+  editUser(idUsuario:any,usuario:any):Observable<any>{
+    return this.httpClient.put(`${this.apiURLAdminUsers}/updateuser/${idUsuario}`,usuario)
+    .pipe(
+      tap( ()=>{this._refresh$.next();}
+      )
+    );
+  
+  }
+
   //USUARIO Y CREDENCIALES GUARDADOS EN EL LOCALSTORAGE
   login(correo:string,contraseña:string):Observable<any>{
     const loginData = {
