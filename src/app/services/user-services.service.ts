@@ -50,7 +50,11 @@ export class UserServicesService {
   }
 
   findById(userId:any):Observable<any>{
-    return this.httpClient.get(`${this.apiURLAdminUsers}/id/${userId}`);
+    return this.httpClient.get(`${this.apiURLAdminUsers}/id/${userId}`)
+    .pipe(
+      tap( ()=>{this._refresh$.next();}
+      )
+    );
   }
 
   findUserForEmail(email:any):Observable<any>{

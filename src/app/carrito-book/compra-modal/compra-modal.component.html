@@ -16,7 +16,7 @@
     
                 <mat-form-field class="example-full-width">
                     <mat-label>Número de tarjeta</mat-label>
-                    <input matInput type="number" maxlength="16" placeholder="1234 1234 1234 1234"
+                    <input matInput type="text" placeholder="1234 1234 1234 1234" (keyup)="validatorCrediCard()"
                         formControlName="creditCard">
                     <mat-icon matSuffix>credit_card</mat-icon>
                     <mat-error>
@@ -31,7 +31,7 @@
                     <div class="col">
                         <mat-form-field>
                             <mat-label>Fecha de caducidad</mat-label>
-                            <input matInput type="number" placeholder="MM/YY" formControlName="creditCardDate">
+                            <input matInput type="text" placeholder="MM/YY" formControlName="creditCardDate" (keyup)="validatorcreditCardDate()">
                             <mat-error>
                                 <ng-container *ngIf="controlHasError('creditCardDate','required')">
                                     Este campo es obligatorio
@@ -43,7 +43,7 @@
                     <div class="col">
                         <mat-form-field>
                             <mat-label>Código de verificación</mat-label>
-                            <input matInput type="number" placeholder="CVV" formControlName="creditCardCvv">
+                            <input matInput type="text" placeholder="CVV" formControlName="creditCardCvv" (keyup)="validatorcreditCardCvv()">
                             <mat-error>
                                 <ng-container *ngIf="controlHasError('creditCardCvv','required')">
                                     Este campo es obligatorio

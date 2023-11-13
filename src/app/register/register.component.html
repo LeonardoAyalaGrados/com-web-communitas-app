@@ -3,11 +3,11 @@
         <!-- <div>
             <img src="./assets/imagenes/credentials.jpg" style="height: 250px; width: 250px; margin-left: 90px;">
         </div> -->
-        <div class="text-center">
-            <h3>Crear Cuena</h3>
-        </div>
+       
         <form [formGroup]="myForm" (ngSubmit)="saveUserHome()">
-
+            <div class="text-center">
+                <h3>Crear Cuena</h3>
+            </div>
             <mat-form-field appearance="outline">
                 <mat-label>Nombre</mat-label>
                 <input matInput type="text" placeholder="" formControlName="nombre" (keyup)="createSlugNombre()">

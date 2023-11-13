@@ -1,1 +1,125 @@
-<h2>Bienvenido {{nombreUsuario}}</h2>
+<div class="container">
+    <h2>Bienvenido {{usuarioEncontrado.fullName}}</h2>
+
+    <div class="container" style="height: 450px;">
+        <h1 mat-dialog-title style="margin-bottom: 0;">Mi información</h1>
+        <hr>
+        <div class="line"></div>
+        <form [formGroup]="myForm">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" readonly placeholder="" formControlName="nombre"
+                            (keyup)="createSlugNombre()">
+                        <mat-error>
+                            <ng-container *ngIf="controlHasError('nombre','required')">
+                                Este campo es obligatorio
+                            </ng-container>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Apellidos</mat-label>
+                        <input matInput type="text" readonly placeholder="" formControlName="apellido"
+                            (keyup)="createSlugApellido()">
+                        <mat-error>
+                            <ng-container *ngIf="controlHasError('apellido','required')">
+                                Este campo es obligatorio
+                            </ng-container>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Celular</mat-label>
+                        <input matInput type="text" maxlength="9" readonly placeholder="" formControlName="celular"
+                            (keyup)="createSlugCelular()">
+                        <mat-error>
+                            <ng-container *ngIf="controlHasError('celular','required')">
+                                Este campo es obligatorio
+                            </ng-container>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Correo</mat-label>
+                        <input matInput type="email" readonly placeholder="example@gmail.com" formControlName="email"
+                            (keyup)="createSlug()" (keyup)="createSlug()">
+                        <mat-error>
+                            <ng-container *ngIf="controlHasError('email','required')">
+                                Este campo es obligatorio
+                            </ng-container>
+                            <ng-container *ngIf="myForm.get('email')">
+                                - No es un correo
+                            </ng-container>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- Continue the pattern for other fields -->
+
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="example-full-width">
+                        <mat-label>Rol</mat-label>
+                        <input matInput type="text"  readonly placeholder="" formControlName="rol">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6">
+
+                    <mat-form-field appearance="fill" class="example-full-width">
+                        <mat-label>Distrito</mat-label>
+                        <input matInput type="text" readonly [value]="usuarioEncontrado.nombreDistrito">
+                    </mat-form-field>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Direccion</mat-label>
+                        <input matInput type="text" readonly minlength="10" placeholder="" formControlName="direccion">
+                        <mat-error>
+                            <ng-container *ngIf="controlHasError('direccion','required')">
+                                Este campo es obligatorio
+                            </ng-container>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput type="text" readonly placeholder="" formControlName="contraseña">
+                        <mat-error>
+                            <ng-container *ngIf="controlHasError('contraseña','required')">
+                                Este campo es obligatorio
+                            </ng-container>
+                            <ng-container *ngIf="controlHasError('contraseña','minLength')">
+                                El minimo de caracteres debe 8
+                            </ng-container>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="text text-center">
+                <button mat-raised-button style="background-color:#FFBE32; color: white; margin-top: 10px;"
+                    [disabled]="myForm.invalid" class="col-md-6 col-sm-6">Editar</button>
+            </div>
+        </form>
+    </div>
+
+</div> 

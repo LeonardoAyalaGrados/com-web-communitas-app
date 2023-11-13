@@ -1,25 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DetalleLibroModalComponent } from 'src/app/home/detalle-libro-modal/detalle-libro-modal.component';
 import { UserServicesService } from 'src/app/services/user-services.service';
 import { VentaOrdenService } from 'src/app/services/venta-orden.service';
 import { DetallePedidoModalComponent } from './detalle-pedido-modal/detalle-pedido-modal.component';
 import { VentaLibroService } from 'src/app/services/venta-libro.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pedidos',
   templateUrl: './pedidos.component.html',
   styleUrls: ['./pedidos.component.css']
 })
-export class PedidosComponent implements OnInit {
+export class PedidosComponent implements OnInit,OnDestroy {
   listVentaLibros:any[]=[];
   listOrdenes:any[];
+  subscription:Subscription;
   displayedColumns: string[] = ['idVentaOrden', 'total', 'estado', 'tipoEntrega','creadoEn','actions'];
   constructor(private userServices:UserServicesService, public dialogo: MatDialog, private ventaLibroServices:VentaLibroService){}
+  
+  
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   ngOnInit(): void {
    this.listarOrdenesActualizadoUser();
    this.listVentaLibroTotal();
+
+  //  this.subscription=this.userServices.refresh$.subscribe(
+  //   ()=>{
+  //     this.listarOrdenesActualizadoUser();
+  //   }
+  //  );
   }
 
   listarOrdenesActualizadoUser(){
@@ -61,7 +74,20 @@ export class PedidosComponent implements OnInit {
         }
         
       });
-  }
+  };
+
+  getColorPorEstado(estado: string): { [key: string]: string } {
+    switch (estado) {
+      case 'PENDIENTE':
+        return { color: 'red' };
+      case 'EN_PROCESO':
+        return { color: 'blue' };
+      case 'ATENDIDO':
+        return { color: 'green' };
+      default:
+        return {};
+    }
+  };
 
 
 }

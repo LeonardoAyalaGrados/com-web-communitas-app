@@ -53,6 +53,7 @@ export class ModalEditComponent implements OnInit{
 
           this.idDistritoMatSelect=data.distrito;
           console.log(this.idDistritoMatSelect);
+          this.myForm.get('distrito.idDistrito')?.setValue(data.distrito);
           
       },
       (error)=>{
@@ -62,6 +63,7 @@ export class ModalEditComponent implements OnInit{
   }
 
   editatUsuario(){
+    console.log(this.myForm);
     this.usuarioServices.editUser(this.dataIdUsuario.idUsuario,this.myForm.value).subscribe(
       (data)=>{
         console.log(data);
