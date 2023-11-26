@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { timeout } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CompraModalComponent } from './compra-modal/compra-modal.component';
+import { VentaRequest } from 'src/model/ventaRequest.model';
 
 @Component({
   selector: 'app-carrito-book',
@@ -41,43 +42,37 @@ export class CarritoBookComponent implements OnInit{
   }
 
 
-  generarCompra(){
+  generarOrden(){
+
+
+    this.showSpinner();
     const idUsuario=this.userServices.getUser().idUsuario;
     const cartItems= this.cartItems;
 
-    const formData = {
+    const ventaRequest:VentaRequest = {
       idUsuario: idUsuario,
       tipoDeEntrega:this.tipoEntrega,
       librosSeleccionados: cartItems,
     }
-    
-    this.showSpinner();
     setTimeout(()=>{
-      console.log(formData);
-      this.modalGenerarCompra();
-    },0);
+      this.dialogo
+      .open(CompraModalComponent, {
+           data: {ventaRequest}
+        })
+        .afterClosed()
+        .subscribe((confirmado: Boolean) => {
+          if (confirmado) {
+          }
+          
+        });
+    },2000);
   }
 
 
    showSpinner() {
     this.spinnerService.show();
-
     setTimeout(() => {
       this.spinnerService.hide();
-    }, 0); 
-  }
-
-
-  modalGenerarCompra(){
-    this.dialogo
-    .open(CompraModalComponent, {
-      // data: `¿Te gusta programar en TypeScript?`
-    })
-    .afterClosed()
-    .subscribe((confirmado: Boolean) => {
-      if (confirmado) {
-      }
-      
-    });
+    }, 2000); 
   }
 }

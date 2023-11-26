@@ -51,6 +51,7 @@ import { OrdersComponent } from './admin/orders/orders.component';
 import { DetallePedidoModalComponent } from './client/pedidos/detalle-pedido-modal/detalle-pedido-modal.component';
 import { DetalleOrdenModalComponent } from './admin/orders/detalle-orden-modal/detalle-orden-modal.component';
 import { CambiarEstadoModalComponent } from './admin/orders/cambiar-estado-modal/cambiar-estado-modal.component';
+import { PerfilComponent } from './admin/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { CambiarEstadoModalComponent } from './admin/orders/cambiar-estado-modal
     DetallePedidoModalComponent,
     DetalleOrdenModalComponent,
     CambiarEstadoModalComponent,
+    PerfilComponent,
 
   ],
   imports: [

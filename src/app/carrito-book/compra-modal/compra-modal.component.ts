@@ -1,34 +1,80 @@
-import { Component } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { ModalSaveBookComponent } from 'src/app/admin/books/book-list/modal-save-book/modal-save-book.component';
+import { CardItemsService } from 'src/app/services/card-items.service';
+import { VentaOrdenService } from 'src/app/services/venta-orden.service';
+import { VentaRequest } from 'src/model/ventaRequest.model';
 
 @Component({
   selector: 'app-compra-modal',
   templateUrl: './compra-modal.component.html',
   styleUrls: ['./compra-modal.component.css']
 })
-export class CompraModalComponent {
+export class CompraModalComponent implements OnInit {
   form:FormGroup;
-  constructor(public dialogo: MatDialogRef<ModalSaveBookComponent>,private fb: FormBuilder){
+  headers: HttpHeaders;
+  constructor(@Inject(MAT_DIALOG_DATA) public compraUsuario:{ventaRequest:VentaRequest},private router:Router,private cardItemsServices:CardItemsService,private snackBar:MatSnackBar,private ventaOrdenServices:VentaOrdenService,public dialogo: MatDialogRef<CompraModalComponent>,private fb: FormBuilder){
+    
     this.form = this.fb.group({
       creditCard: ['', [Validators.required,this.validacionLongitud(19)]],
       creditCardDate: ['', [Validators.required,this.validacionLongitud(5)]],
       creditCardCvv: ['', [Validators.required,this.validacionLongitud(3)]],
     });
-  }
 
+  }
 
     ngOnInit() {
-    
+     console.log(this.compraUsuario.ventaRequest)
     }
 
-  cerrarDialogo(): void {
-    this.dialogo.close(false);
-  }
-  generarCompra(){
+    generarCompra() {
+      this.ventaOrdenServices.crearVenta(this.compraUsuario.ventaRequest).subscribe(
+        (response) => {
+          console.log('Respuesta del servidor:', response);
+          // Realizar acciones adicionales según la respuesta del servidor
+        },
+        (error) => {
+          console.log('Error del servidor:', error);
+      
+          // Intentar obtener el cuerpo de la respuesta como texto
+          const bodyAsText = error.error.text;
+      
+          try {
+            // Tratar de analizar el cuerpo de la respuesta como JSON
+            const bodyAsJson = JSON.parse(bodyAsText);
+      
+            // Realizar acciones adicionales según el cuerpo JSON
+            console.log('Cuerpo de la respuesta JSON:', bodyAsJson);
+          } catch (e) {
+            // Si no se puede analizar como JSON, tratarlo como texto normal
+            console.error('No se pudo analizar como JSON:', bodyAsText);
+      
+            // Realizar acciones adicionales según el texto
+            // Por ejemplo, mostrar el mensaje al usuario
+            //alert(bodyAsText);
+            this.snackBar.open("Se realizo la compra con exito","OK",{
+              duration:6000,
+              verticalPosition:"top"
+            });
+            this.cardItemsServices.clear();
+            this.cerrarDialogo();
+            this.router.navigate(["client/orders"]);
+          }
+      
+          // Manejar el error de manera adecuada
+        }
+      );
+      
+    }
+    
+    
 
-  }
+     
+  
   
   validatorCrediCard() {
     const crediCardControl = this.form!.controls['creditCard'];
@@ -86,4 +132,8 @@ export class CompraModalComponent {
   controlHasError(control: string, error: string): boolean {
     return this.form.controls[control].hasError(error) && this.form.controls[control].touched
   }
+  cerrarDialogo(): void {
+    this.dialogo.close(false);
+  }
 }
+

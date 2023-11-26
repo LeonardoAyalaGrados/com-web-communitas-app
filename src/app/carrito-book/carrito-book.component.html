@@ -53,7 +53,7 @@
         </div>
         
           <ng-container *ngIf="userServices.isLoggedIn(); else botonIniciarSesion">
-            <button class="w-100" mat-raised-button color="primary" (click)="generarCompra()" [disabled]="!checkoutForm.valid">Pagar con Visa<mat-icon>visa</mat-icon></button>
+            <button class="w-100" mat-raised-button color="primary" (click)="generarOrden()" [disabled]="!checkoutForm.valid">Pagar con Tarjeta<mat-icon>visa</mat-icon></button>
           </ng-container>
           <ng-template #botonIniciarSesion>
             <button class="w-100" mat-raised-button color="warn" routerLink="/login" >Debe inciar sesión<mat-icon> call_made</mat-icon></button>

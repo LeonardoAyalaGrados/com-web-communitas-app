@@ -51,6 +51,101 @@ export class ModalSaveBookComponent {
       );
     }
 
+
+    
+    createSlugPrecio() {
+      const precioControl = this.myForm!.controls['precio'];
+      let precio = precioControl.value.toString();
+    
+      // Reemplazar todo lo que no sea un dígito o un punto (excepto el punto seguido de "e") con una cadena vacía
+      let precioLimpio = precio.replace(/[^\d.]+|[^\d]+\.(?=[^\de])/g, '');
+    
+      // Eliminar puntos al principio del valor
+      precioLimpio = precioLimpio.replace(/^\./, '');
+    
+      // Limitar la longitud a seis dígitos
+      precioLimpio = precioLimpio.slice(0, 6);
+    
+      // Eliminar puntos adicionales
+      precioLimpio = precioLimpio.replace(/\.{2,}/g, '.');
+    
+      // Permitir solo un punto decimal al final
+      precioLimpio = precioLimpio.replace(/(\.\d*)\./g, '$1');
+    
+      // Establecer el valor limpio en el control
+      precioControl.setValue(precioLimpio);
+    }
+    
+
+    createSlugStock() {
+      const stockControl = this.myForm!.controls['stock'];
+      let stock = stockControl.value;
+    
+      // Reemplazar todo lo que no sea un dígito con una cadena vacía
+      let stockLimpio = stock.toString().replace(/\D/g, '');
+    
+      // Limitar la longitud a dos dígitos
+      stockLimpio = stockLimpio.slice(0, 2);
+    
+      // Si la cadena resultante no está vacía, convierte a número, de lo contrario, deja el campo vacío
+      const stockNumerico = stockLimpio ? parseInt(stockLimpio, 10) : null;
+    
+      // Establecer el valor limpio en el control
+      stockControl.setValue(stockNumerico);
+    
+      // Si deseas evitar que se ingresen guiones después de la limpieza, puedes agregar una línea adicional
+      stockControl.setValue(stockControl.value.toString().replace('-', ''));
+    }
+    
+    createSlugPaginas() {
+      const paginasControl = this.myForm!.controls['paginas'];
+      let paginas = paginasControl.value;
+    
+      // Reemplazar todo lo que no sea un dígito con una cadena vacía
+      let paginasLimpio = paginas.toString().replace(/\D/g, '');
+    
+      // Limitar la longitud a cuatro dígitos
+      paginasLimpio = paginasLimpio.slice(0, 4);
+    
+      // Si la cadena resultante no está vacía, convierte a número, de lo contrario, deja el campo vacío
+      const paginasNumerico = paginasLimpio ? parseInt(paginasLimpio, 10) : null;
+    
+      // Establecer el valor limpio en el control
+      paginasControl.setValue(paginasNumerico);
+    }
+
+    createSlugAutor() {
+      const autorControl = this.myForm!.controls['autor'];
+      let autor = autorControl.value;
+    
+      // Reemplazar todo lo que no sea una letra con una cadena vacía
+      let autorLimpio = autor.replace(/[^a-zA-Z]/g, '');
+    
+      // Convertir a mayúsculas
+      autorLimpio = autorLimpio.toUpperCase();
+    
+      // Establecer el valor limpio en el control
+      autorControl.setValue(autorLimpio);
+    }
+
+    createSlugAnio() {
+      const anioControl = this.myForm!.controls['anio'];
+      let anio = anioControl.value;
+    
+      // Reemplazar todo lo que no sea un dígito con una cadena vacía
+      let anioLimpio = anio.toString().replace(/\D/g, '');
+    
+      // Limitar la longitud a cuatro dígitos
+      anioLimpio = anioLimpio.slice(0, 3);
+    
+      // Si la cadena resultante no está vacía, convierte a número, de lo contrario, deja el campo vacío
+      const anioNumerico = anioLimpio ? parseInt(anioLimpio, 10) : null;
+    
+      // Establecer el valor limpio en el control
+      anioControl.setValue(anioNumerico);
+    }
+    
+
     controlHasError(control: string, error: string): boolean {
       return this.myForm.controls[control].hasError(error) && this.myForm.controls[control].touched
     }    

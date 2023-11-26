@@ -7,7 +7,7 @@
           <!-- Título -->
           <mat-form-field class="mb-2 w-100" appearance="outline">
             <mat-label>Título</mat-label>
-            <input matInput type="text" placeholder="Título" formControlName="titulo"/>
+            <input matInput type="text" placeholder="Título" maxlength="100" formControlName="titulo"/>
             <mat-error>
               <ng-container *ngIf="controlHasError('titulo', 'required')">
                 Este campo es obligatorio
@@ -18,7 +18,7 @@
           <!-- Descripción -->
           <mat-form-field class="mb-2 w-100" appearance="outline">
             <mat-label>Descripción</mat-label>
-            <input matInput type="text" placeholder="Descripción" formControlName="descripcion" />
+            <input matInput type="text"  maxlength="600" placeholder="Descripción" formControlName="descripcion" />
             <mat-error>
               <ng-container *ngIf="controlHasError('descripcion', 'required')">
                 Este campo es obligatorio
@@ -31,7 +31,7 @@
              <!-- Precio -->
                 <mat-form-field class="mb-2 w-100" appearance="outline">
                   <mat-label>Precio</mat-label>
-                  <input matInput type="number" placeholder="Precio" formControlName="precio" />
+                  <input matInput type="number" placeholder="Precio" formControlName="precio"  (keyup)="createSlugPrecio()"/>
                   <mat-error>
                     <ng-container *ngIf="controlHasError('precio', 'required')">
                       Este campo es obligatorio
@@ -44,7 +44,7 @@
             <!-- Stock -->
                 <mat-form-field class="mb-2 w-100" appearance="outline">
                   <mat-label>Stock</mat-label>
-                  <input matInput type="number" placeholder="Stock" formControlName="stock" />
+                  <input matInput type="number" placeholder="Stock" formControlName="stock" (keyup)="createSlugStock()" />
                   <mat-error>
                     <ng-container *ngIf="controlHasError('stock', 'required')">
                       Este campo es obligatorio
@@ -72,7 +72,7 @@
           <!-- Autor -->
           <mat-form-field class="mb-2 w-100" appearance="outline">
             <mat-label>Autor</mat-label>
-            <input matInput type="text" placeholder="Autor" formControlName="autor" />
+            <input matInput type="text" placeholder="Autor"  maxlength="20" formControlName="autor" (keyup)="createSlugAutor()" />
             <mat-error>
               <ng-container *ngIf="controlHasError('autor', 'required')">
                 Este campo es obligatorio
@@ -83,7 +83,7 @@
           <!-- Páginas -->
           <mat-form-field class="mb-2 w-100" appearance="outline">
             <mat-label>Páginas</mat-label>
-            <input matInput type="number" placeholder="Páginas" formControlName="paginas" />
+            <input matInput type="number" placeholder="Páginas" formControlName="paginas"  (keyup)="createSlugPaginas()"/>
             <mat-error>
               <ng-container *ngIf="controlHasError('paginas', 'required')">
                 Este campo es obligatorio
@@ -94,7 +94,7 @@
           <!-- Año -->
           <mat-form-field class="mb-2 w-100" appearance="outline">
             <mat-label>Año</mat-label>
-            <input matInput type="number" placeholder="Año" formControlName="anio" />
+            <input matInput type="number" placeholder="Año" formControlName="anio" (keydown)="createSlugAnio()"/>
             <mat-error>
               <ng-container *ngIf="controlHasError('anio', 'required')">
                 Este campo es obligatorio

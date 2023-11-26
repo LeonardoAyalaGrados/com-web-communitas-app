@@ -4,17 +4,17 @@ import { DistrictService } from 'src/app/services/district.service';
 import { UserServicesService } from 'src/app/services/user-services.service';
 
 @Component({
-  selector: 'app-client-profile',
-  templateUrl: './client-profile.component.html',
-  styleUrls: ['./client-profile.component.css']
+  selector: 'app-perfil',
+  templateUrl: './perfil.component.html',
+  styleUrls: ['./perfil.component.css']
 })
-export class ClientProfileComponent implements OnInit{
+export class PerfilComponent implements OnInit{
   nombreUsuario:any;
   idUsuario:any;
   usuarioEncontrado:any
   myForm:FormGroup;
   distritos:any[]=[];
-  public nombreDistrito:string;
+  public idDistritoMatSelect:number;
   constructor(private districtServices:DistrictService,private fb:FormBuilder,private usuarioServices:UserServicesService){
     this.idUsuario=usuarioServices.getUser().idUsuario;
     this.myForm=this.fb.group({
@@ -34,6 +34,7 @@ export class ClientProfileComponent implements OnInit{
   }
   ngOnInit(): void {
    
+  
       this.buscarUsuarioPorId();
   
     
@@ -45,9 +46,11 @@ export class ClientProfileComponent implements OnInit{
           this.usuarioEncontrado=data;
           console.log(data);
           this.myForm.patchValue(data);
+
+          this.idDistritoMatSelect=data.distrito;
+          console.log(this.idDistritoMatSelect);
           this.myForm.get('distrito.idDistrito')?.setValue(data.distrito);
-          // this.nombreDistrito=data.nombreDistrito;
-          // console.log(this.nombreDistrito);
+          
       },
       (error)=>{
         console.log(error);
@@ -117,5 +120,27 @@ export class ClientProfileComponent implements OnInit{
       }
       return null;
     };
+  }
+
+  listarDistritos(){
+    this.districtServices.listDistrict().subscribe(
+      (data)=>{
+          this.distritos=data;
+          console.log(data);
+      },
+      (error)=>{
+          console.log("error el listar paises")
+      }
+    );
+  }
+
+  onDistritoSeleccionado(valorSeleccionado: number){
+    console.log('Valor seleccionado:', valorSeleccionado);
+    if (this.myForm) {
+      const distritoControl = this.myForm.get('distrito.idDistrito');
+      if (distritoControl) {
+        distritoControl.setValue(valorSeleccionado);
+      }
+    }
   }
 }
