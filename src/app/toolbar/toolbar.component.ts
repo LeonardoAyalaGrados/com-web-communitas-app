@@ -21,7 +21,7 @@ export class ToolbarComponent implements OnInit{
 
   logout(){
     this.userServices.cerrarSesion();
-    this.router.navigate(['']);
+    this.router.navigate(['login']);
 
   }
 

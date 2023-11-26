@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DistrictService } from 'src/app/services/district.service';
 import { UserServicesService } from 'src/app/services/user-services.service';
 
@@ -18,7 +19,7 @@ export class ModalEditComponent implements OnInit{
   public idDistritoMatSelect:number;
  
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dataIdUsuario: { idUsuario: any }, private usuarioServices:UserServicesService ,
+  constructor(@Inject(MAT_DIALOG_DATA) public dataIdUsuario: { idUsuario: any }, private spinnerService: NgxSpinnerService,private usuarioServices:UserServicesService ,
                   private districtServices:DistrictService,public dialogo: MatDialogRef<ModalEditComponent> ,private fb:FormBuilder, private snackBar:MatSnackBar){
     this.myForm=this.fb.group({
       nombre:['',[Validators.required,Validators.minLength(3)]],
@@ -39,12 +40,13 @@ export class ModalEditComponent implements OnInit{
     this.listarDistritos();
     setTimeout(()=>{
       this.buscarUsuarioPorId();
-    },3000);
+    },7000);
     
 
   }
 
   buscarUsuarioPorId(){
+    this.showSpinner();
     this.usuarioServices.findById(this.dataIdUsuario.idUsuario).subscribe(
       (data)=>{
           this.usuarioEncontrado=data;
@@ -173,5 +175,12 @@ export class ModalEditComponent implements OnInit{
   }
   cerrarDialogo(): void {
     this.dialogo.close(false);
+  }
+
+  showSpinner() {
+    this.spinnerService.show();
+    setTimeout(() => {
+      this.spinnerService.hide();
+    }, 6000); 
   }
 }

@@ -6,6 +6,7 @@ import { VentaOrdenService } from 'src/app/services/venta-orden.service';
 import { DetallePedidoModalComponent } from './detalle-pedido-modal/detalle-pedido-modal.component';
 import { VentaLibroService } from 'src/app/services/venta-libro.service';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-pedidos',
@@ -17,7 +18,7 @@ export class PedidosComponent implements OnInit,OnDestroy {
   listOrdenes:any[];
   subscription:Subscription;
   displayedColumns: string[] = ['idVentaOrden', 'total', 'estado', 'tipoEntrega','creadoEn','actions'];
-  constructor(private userServices:UserServicesService, public dialogo: MatDialog, private ventaLibroServices:VentaLibroService){}
+  constructor(private userServices:UserServicesService,private spinnerService: NgxSpinnerService ,public dialogo: MatDialog, private ventaLibroServices:VentaLibroService){}
   
   
   ngOnDestroy(): void {
@@ -25,6 +26,7 @@ export class PedidosComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
+    this.showSpinner();
    this.listarOrdenesActualizadoUser();
    this.listVentaLibroTotal();
 
@@ -89,5 +91,10 @@ export class PedidosComponent implements OnInit,OnDestroy {
     }
   };
 
-
+  showSpinner() {
+    this.spinnerService.show();
+    setTimeout(() => {
+      this.spinnerService.hide();
+    }, 3000); 
+  }
 }

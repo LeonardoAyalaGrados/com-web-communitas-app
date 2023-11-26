@@ -3,6 +3,7 @@ import { Component,Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DistrictService } from 'src/app/services/district.service';
 import { UserServicesService } from 'src/app/services/user-services.service';
 
@@ -16,7 +17,7 @@ export class ModalSaveUserComponent implements OnInit {
   myForm:FormGroup;
   distritos:any[]=[];
 
-  constructor(private districtService: DistrictService ,public dialogo: MatDialogRef<ModalSaveUserComponent>,
+  constructor(private districtService: DistrictService ,private spinnerService: NgxSpinnerService,public dialogo: MatDialogRef<ModalSaveUserComponent>,
     @Inject(MAT_DIALOG_DATA) public mensaje: string,private fb:FormBuilder, private snackBar: MatSnackBar,private usuarioService: UserServicesService){
     this.myForm=this.fb.group({
       nombre:['',[Validators.required,Validators.minLength(3)]],
@@ -102,7 +103,7 @@ export class ModalSaveUserComponent implements OnInit {
   
 
   confirmado(){
-    
+    this.showSpinner();
     console.log(this.myForm.value);
       this.usuarioService.saveUser(this.myForm.value).subscribe(
         (data)=>{
@@ -149,6 +150,12 @@ export class ModalSaveUserComponent implements OnInit {
   }
   cerrarDialogo(): void {
     this.dialogo.close(false);
+  }
+  showSpinner() {
+    this.spinnerService.show();
+    setTimeout(() => {
+      this.spinnerService.hide();
+    }, 3000); 
   }
 }
 

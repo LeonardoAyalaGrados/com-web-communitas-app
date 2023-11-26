@@ -72,7 +72,7 @@
           <!-- Autor -->
           <mat-form-field class="mb-2 w-100" appearance="outline">
             <mat-label>Autor</mat-label>
-            <input matInput type="text" placeholder="Autor"  maxlength="20" formControlName="autor" (keyup)="createSlugAutor()" />
+            <input matInput type="text" placeholder="Autor"  maxlength="30" formControlName="autor" (keyup)="createSlugAutor()" />
             <mat-error>
               <ng-container *ngIf="controlHasError('autor', 'required')">
                 Este campo es obligatorio
@@ -150,4 +150,4 @@
       </div>
     </div>
   </div>
-  
+  <ngx-spinner size="medium" type="ball-scale-multiple"></ngx-spinner>

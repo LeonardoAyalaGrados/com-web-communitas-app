@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DistrictService } from 'src/app/services/district.service';
 import { UserServicesService } from 'src/app/services/user-services.service';
 
@@ -15,7 +16,7 @@ export class ClientProfileComponent implements OnInit{
   myForm:FormGroup;
   distritos:any[]=[];
   public nombreDistrito:string;
-  constructor(private districtServices:DistrictService,private fb:FormBuilder,private usuarioServices:UserServicesService){
+  constructor(private districtServices:DistrictService,private fb:FormBuilder,private usuarioServices:UserServicesService,private spinnerService: NgxSpinnerService){
     this.idUsuario=usuarioServices.getUser().idUsuario;
     this.myForm=this.fb.group({
       nombre:['',[Validators.required,Validators.minLength(3)]],
@@ -40,6 +41,7 @@ export class ClientProfileComponent implements OnInit{
   }
 
   buscarUsuarioPorId(){
+    this.showSpinner();
     this.usuarioServices.findById(this.idUsuario).subscribe(
       (data)=>{
           this.usuarioEncontrado=data;
@@ -117,5 +119,12 @@ export class ClientProfileComponent implements OnInit{
       }
       return null;
     };
+  }
+
+  showSpinner() {
+    this.spinnerService.show();
+    setTimeout(() => {
+      this.spinnerService.hide();
+    }, 3000); 
   }
 }

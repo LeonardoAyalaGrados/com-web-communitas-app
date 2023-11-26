@@ -118,8 +118,8 @@ export class ModalSaveBookComponent {
       const autorControl = this.myForm!.controls['autor'];
       let autor = autorControl.value;
     
-      // Reemplazar todo lo que no sea una letra con una cadena vacía
-      let autorLimpio = autor.replace(/[^a-zA-Z]/g, '');
+      // Reemplazar todo lo que no sea una letra o espacio con una cadena vacía
+      let autorLimpio = autor.replace(/[^a-zA-Z\s]/g, '');
     
       // Convertir a mayúsculas
       autorLimpio = autorLimpio.toUpperCase();
@@ -127,7 +127,7 @@ export class ModalSaveBookComponent {
       // Establecer el valor limpio en el control
       autorControl.setValue(autorLimpio);
     }
-
+    
     createSlugAnio() {
       const anioControl = this.myForm!.controls['anio'];
       let anio = anioControl.value;
@@ -158,7 +158,7 @@ export class ModalSaveBookComponent {
         this.bookServices.upploadFile(formData).subscribe(
           (data)=>{
             console.log(data);
-            this.myForm!.controls[control].setValue(data.path);
+            this.myForm!.controls[control].setValue(data.key);
           },(error)=>{
             console.log(error);
           }

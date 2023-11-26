@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalSaveBookComponent } from 'src/app/admin/books/book-list/modal-save-book/modal-save-book.component';
 import { CardItemsService } from 'src/app/services/card-items.service';
 import { VentaOrdenService } from 'src/app/services/venta-orden.service';
@@ -17,7 +18,7 @@ import { VentaRequest } from 'src/model/ventaRequest.model';
 export class CompraModalComponent implements OnInit {
   form:FormGroup;
   headers: HttpHeaders;
-  constructor(@Inject(MAT_DIALOG_DATA) public compraUsuario:{ventaRequest:VentaRequest},private router:Router,private cardItemsServices:CardItemsService,private snackBar:MatSnackBar,private ventaOrdenServices:VentaOrdenService,public dialogo: MatDialogRef<CompraModalComponent>,private fb: FormBuilder){
+  constructor(@Inject(MAT_DIALOG_DATA) public compraUsuario:{ventaRequest:VentaRequest},private router:Router,private cardItemsServices:CardItemsService,private snackBar:MatSnackBar,private ventaOrdenServices:VentaOrdenService,public dialogo: MatDialogRef<CompraModalComponent>,private fb: FormBuilder, private spinnerService: NgxSpinnerService){
     
     this.form = this.fb.group({
       creditCard: ['', [Validators.required,this.validacionLongitud(19)]],
@@ -32,12 +33,14 @@ export class CompraModalComponent implements OnInit {
     }
 
     generarCompra() {
+      this.showSpinner();
       this.ventaOrdenServices.crearVenta(this.compraUsuario.ventaRequest).subscribe(
         (response) => {
           console.log('Respuesta del servidor:', response);
           // Realizar acciones adicionales según la respuesta del servidor
         },
         (error) => {
+          
           console.log('Error del servidor:', error);
       
           // Intentar obtener el cuerpo de la respuesta como texto
@@ -56,25 +59,23 @@ export class CompraModalComponent implements OnInit {
             // Realizar acciones adicionales según el texto
             // Por ejemplo, mostrar el mensaje al usuario
             //alert(bodyAsText);
-            this.snackBar.open("Se realizo la compra con exito","OK",{
-              duration:6000,
-              verticalPosition:"top"
-            });
-            this.cardItemsServices.clear();
-            this.cerrarDialogo();
-            this.router.navigate(["client/orders"]);
+           
+            
+              this.snackBar.open("Se realizo la compra con exito","OK",{
+                duration:6000,
+                verticalPosition:"top"
+              });
+              this.cardItemsServices.clear();
+              this.cerrarDialogo();
+              this.router.navigate(["client/orders"]);
+
+            
           }
       
-          // Manejar el error de manera adecuada
         }
       );
       
     }
-    
-    
-
-     
-  
   
   validatorCrediCard() {
     const crediCardControl = this.form!.controls['creditCard'];
@@ -134,6 +135,13 @@ export class CompraModalComponent implements OnInit {
   }
   cerrarDialogo(): void {
     this.dialogo.close(false);
+  }
+
+  showSpinner() {
+    this.spinnerService.show();
+    setTimeout(() => {
+      this.spinnerService.hide();
+    }, 3000); 
   }
 }
 

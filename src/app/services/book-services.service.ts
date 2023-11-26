@@ -28,7 +28,7 @@ export class BookServicesService {
   }
 
   upploadFile(formData: FormData):Observable<any>{
-    return this.httpClient.post(`http://localhost:8080/api/media/upload`,formData);
+    return this.httpClient.post(`http://localhost:5000/api/v1/bucket-s3/upload`,formData);
 }
 
   saveBook(book:any):Observable<any>{

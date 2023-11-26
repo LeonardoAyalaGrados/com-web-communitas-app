@@ -111,4 +111,9 @@ export class UserListComponent implements OnInit,OnDestroy{
     }
   }
 
+  enviarMensaje(celular:any){
+    const enlaceWhatsApp = `https://api.whatsapp.com/send?phone=${celular}`;
+    window.open(enlaceWhatsApp);
+  }
+
 }

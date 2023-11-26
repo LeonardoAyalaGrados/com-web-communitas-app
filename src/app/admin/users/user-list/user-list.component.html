@@ -62,9 +62,9 @@
                 <button mat-icon-button color="primary" (click)="modalEditUser(user.idUsuario)" style="color: #FFBE32;">
                   <i class="fa-solid fa-pen-to-square"></i>
               </button>
-              <!-- <button mat-icon-button class="ms-2" color="warn">
-                <i class="fa-solid fa-trash"></i>
-              </button> -->
+              <button mat-icon-button class="ms-2" (click)="enviarMensaje(user.celular)" style="color:#25D366 ;">
+                <i class="fa-brands fa-square-whatsapp"></i>
+              </button>
       </ng-container>
     
           <!-- <ng-container matColumnDef="actions">
