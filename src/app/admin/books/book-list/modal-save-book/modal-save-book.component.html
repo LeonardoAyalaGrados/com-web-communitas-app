@@ -94,10 +94,13 @@
           <!-- Año -->
           <mat-form-field class="mb-2 w-100" appearance="outline">
             <mat-label>Año</mat-label>
-            <input matInput type="number" placeholder="Año" formControlName="anio" (keydown)="createSlugAnio()"/>
+            <input matInput type="number" placeholder="Año" formControlName="anio" (keyup)="createSlugAnio()"/>
             <mat-error>
               <ng-container *ngIf="controlHasError('anio', 'required')">
                 Este campo es obligatorio
+              </ng-container>
+              <ng-container *ngIf="controlHasError('anio', 'minLength')">
+                Debe tener 4 dígitos
               </ng-container>
             </mat-error>
           </mat-form-field>

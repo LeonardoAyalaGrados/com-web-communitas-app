@@ -1,16 +1,18 @@
 <div class="container">
-    <h3 class="fw-bold">Detalle de la compra</h3>
-    <hr>
+  <h3 class="fw-bold">Detalle de la compra</h3>
+  <hr>
   <div>
     <p><strong>N° de Orden: </strong> AU-10{{ dataIdVentaOrden.idVentaOrden }}</p>
     <div class="row text text-center">
-      <div *ngFor="let libroDetalle of ventaLibroDetalle" class="col-sm-6 col-md-6">
-        <img [src]="libroDetalle.imagen | imagePipe" alt="" style="width: 100px; height: 135px;">
-        <div>
-          <div><strong>Titulo: </strong>{{ libroDetalle.titulo }} </div>
-          <div><strong>Autor: </strong> {{ libroDetalle.autor }} </div>
-          <div><strong>Cantidad: </strong> 1</div>
-          <p><strong>Precio: </strong> {{ libroDetalle.precio | solesPipe }} </p>
+      <div *ngFor="let libroDetalle of ventaLibroDetalle" class="col-sm-{{ 12 / ventaLibroDetalle.length }} col-md-{{ 12 / ventaLibroDetalle.length }}">
+        <div class="libro-item">
+          <img [src]="libroDetalle.imagen | imagePipe" alt="" class="libro-imagen">
+          <div class="libro-detalles">
+            <div><strong>Titulo: </strong>{{ libroDetalle.titulo }} </div>
+            <div><strong>Autor: </strong> {{ libroDetalle.autor }} </div>
+            <div><strong>Cantidad: </strong> 1</div>
+            <p><strong>Precio: </strong> {{ libroDetalle.precio | solesPipe }} </p>
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {  AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BookServicesService } from 'src/app/services/book-services.service';
@@ -72,9 +72,13 @@ export class ModalSaveBookComponent {
       // Permitir solo un punto decimal al final
       precioLimpio = precioLimpio.replace(/(\.\d*)\./g, '$1');
     
+      // Permitir solo un punto decimal
+      precioLimpio = precioLimpio.replace(/(\.\d*)\./g, '$1');
+    
       // Establecer el valor limpio en el control
       precioControl.setValue(precioLimpio);
     }
+    
     
 
     createSlugStock() {
@@ -118,8 +122,8 @@ export class ModalSaveBookComponent {
       const autorControl = this.myForm!.controls['autor'];
       let autor = autorControl.value;
     
-      // Reemplazar todo lo que no sea una letra o espacio con una cadena vacía
-      let autorLimpio = autor.replace(/[^a-zA-Z\s]/g, '');
+      // Reemplazar todo lo que no sea una letra, espacio o coma con una cadena vacía
+      let autorLimpio = autor.replace(/[^a-zA-Z\s,]/g, '');
     
       // Convertir a mayúsculas
       autorLimpio = autorLimpio.toUpperCase();
@@ -128,24 +132,33 @@ export class ModalSaveBookComponent {
       autorControl.setValue(autorLimpio);
     }
     
-    createSlugAnio() {
-      const anioControl = this.myForm!.controls['anio'];
-      let anio = anioControl.value;
-    
-      // Reemplazar todo lo que no sea un dígito con una cadena vacía
-      let anioLimpio = anio.toString().replace(/\D/g, '');
-    
-      // Limitar la longitud a cuatro dígitos
-      anioLimpio = anioLimpio.slice(0, 3);
-    
-      // Si la cadena resultante no está vacía, convierte a número, de lo contrario, deja el campo vacío
-      const anioNumerico = anioLimpio ? parseInt(anioLimpio, 10) : null;
-    
-      // Establecer el valor limpio en el control
-      anioControl.setValue(anioNumerico);
-    }
-    
+  
 
+    createSlugAnio() {
+      const anioControl = this.myForm.get('anio');
+      if (anioControl) {
+        const anioValue = anioControl.value;
+        
+        if (anioValue !== null && anioValue !== undefined && anioValue !== '') {
+          // Verificar si comienza con 1 o 2
+          const primerDigito = parseInt(anioValue.toString()[0], 10);
+          
+          if (isNaN(primerDigito) || (primerDigito !== 1 && primerDigito !== 2)) {
+            // Si no comienza con 1 o 2, establecer el campo como vacío
+            anioControl.setValue(null);
+          } else {
+            // Limitar la longitud a cuatro dígitos
+            const anioCortado = anioValue.toString().slice(0, 4);
+            
+            // Convertir a número y establecer el valor en el control
+            anioControl.setValue(parseInt(anioCortado, 10));
+          }
+        }
+      }
+    }
+       
+    
+    
     controlHasError(control: string, error: string): boolean {
       return this.myForm.controls[control].hasError(error) && this.myForm.controls[control].touched
     }    

@@ -45,7 +45,6 @@ export class BookListComponent implements OnInit, OnDestroy {
     );
   }
 
-  modalEditUser(idUsuario:any){}
 
   modalNewBook(){
     this.dialogo
