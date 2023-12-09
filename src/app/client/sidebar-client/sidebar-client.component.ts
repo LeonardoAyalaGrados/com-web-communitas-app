@@ -15,6 +15,6 @@ export class SidebarClientComponent {
     this.spinnerService.show();
     setTimeout(() => {
       this.spinnerService.hide();
-    }, 3000); 
+    }, 1000); 
   }
 }

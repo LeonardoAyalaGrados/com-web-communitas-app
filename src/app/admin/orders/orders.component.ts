@@ -16,7 +16,7 @@ export class OrdersComponent implements OnInit, OnDestroy{
   subcrip:Subscription;
   listVentaOrden:any[]=[];
   listVentaLibros:any[]=[];
-  isplayedColumns: string[] = ['idVentaOrden', 'total', 'estado', 'tipoEntrega','creadoEn','distrito','idUsuario','usuario','celular','correo','actions'];
+  isplayedColumns: string[] = ['idVentaOrden', 'total', 'estado', 'tipoEntrega','creadoEn','distrito','direccion','idUsuario','usuario','celular','correo','actions'];
   
   
   ngOnInit(): void {

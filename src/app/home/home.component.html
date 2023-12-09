@@ -33,11 +33,11 @@
 
                             <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
                         </mat-card-header>
-                        <img [src]="libro.imagen | imagePipe" alt="" class="mw-96px"
+                        <img [src]="libro.imagen | imagePipe" alt="" class="mw-100px"
                             style="width:156px; height: 233px;display: block; margin: 0 auto;">
                         <mat-card-content>
                             <div class="text-center d-flex align-items-center">
-                                <mat-card-title style="font-size: medium;">{{libro.titulo}}</mat-card-title>
+                                <mat-card-title style="font-size: medium; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" >{{libro.titulo}}</mat-card-title>
                             </div>
                             <p style="color: #83A5F3; font-size: large;">
                                 {{libro.precio| solesPipe}}
